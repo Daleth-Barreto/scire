@@ -66,3 +66,11 @@ Hand off to:
 - `researcher` with distilled lessons as new hypotheses
 - `reviewer` when conclusions are controversial or high-stakes
 - Human user for quality gates on every significant conclusion
+
+## Kaizen (self-improvement)
+
+- Maintain the audit trail: every material conclusion gets a dated audit file in
+  `<project>/audits/` and updates the `audit.md` summary + index.
+- Trend-watch `audit.md`: recurring verdicts become new agents' constraints
+  (propose edits to the relevant `.opencode/agents/*.md`).
+- Promote lessons to verified only with repeated evidence; demote weak ones.

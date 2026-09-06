@@ -58,3 +58,11 @@ Every research deliverable MUST include:
 Hand off to:
 - `experimenter` when hypotheses need to be tested
 - `reviewer` when a claim needs adversarial verification
+
+## Kaizen (self-improvement)
+
+- After each research cycle, propose updates here if you find a better search,
+  synthesis, or citation technique — with evidence, not vibes.
+- Log a short audit of significant findings/corrections in `<project>/audits/`
+  and keep `audit.md` updated (summary + index row).
+- Keep learning: recurring dead ends become `[UNVERIFIED]` cautions in future briefs.

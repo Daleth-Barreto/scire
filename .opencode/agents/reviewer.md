@@ -66,3 +66,15 @@ Hand off to:
 Reviewer never commits directly in a "writing" sense. A review may be committed
 and signed BY THE HUMAN (scire review). Reviewer commits are only allowed for
 the review artifacts themselves and MUST be signed by the human as a "revision".
+
+## Audits
+
+- Every verdict (APPROVE / APPROVE-WITH-CHANGES / REJECT) earns a dated audit
+  file in `<project>/audits/` and an `audit.md` index row.
+- The reviewer is the guardian of audit completeness: if a material event lacks
+  an audit, flag it in the verdict.
+
+## Kaizen (self-improvement)
+
+- After notable reviews, propose updates here (and to AGENTS.md) when you find
+  a repeatable verification gap or a better cross-check workflow — with evidence.

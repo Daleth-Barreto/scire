@@ -32,6 +32,15 @@ mark it as `[UNVERIFIED]`. Never present unverified claims as facts.
 - Skills discovered are written to workspace/.coral/public/skills/
 - Nothing is discarded: failures are as important as successes
 
+### Audits
+- Every project directory MUST carry an `audits/` folder (see AGENTS.md/audit.md
+  in the repo root): dated audit per material event + a living `audit.md` index.
+- audits are committed; nothing is deleted; verdicts route through reviewer/human.
+
+### Agent Self-Improvement
+- `.opencode/agents/*.md` and policies are living documents; agents propose
+  updates from evidence (Kaizen), recorded as audits.
+
 ### Free Resources First
 - Prefer free tier providers through OmniRoute routing
 - Colab provides free GPU for heavy compute

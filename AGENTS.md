@@ -81,9 +81,9 @@ git -c user.name="scire-experimenter" \
 | Agent | Tools | Writes to |
 |-------|-------|-----------|
 | researcher | websearch, webfetch, read, notebooklm | research/literature, research/reports |
-| experimenter | bash, edit, write, colab mcp | notebooks, workspace, src |
-| analyzer | read, edit, write | research/evolution, workspace/.coral/public |
-| reviewer | read, grep, webfetch | research/reports/reviews only |
+| experimenter | bash, edit, write, colab mcp | notebooks, workspace, src, audits of experiments |
+| analyzer | read, edit, write | research/evolution, workspace/.coral/public, audits |
+| reviewer | read, grep, webfetch | research/reports/reviews, audits (verdicts) |
 
 ## Free-First Policy
 
@@ -94,6 +94,72 @@ SCIRE prefers free-tier resources in this order:
 4. Local compute (no cost)
 
 Document quota hits as lessons. Never burn paid quota when a free tier exists.
+
+## Audits & audit.md (MANDATORY)
+
+Every project directory MUST contain an `audits/` subfolder:
+
+```
+<project>/
+  audits/
+    audit.md        # living summary + index of all audits in this project
+    2026-SEP-01-description-title.md   # one file per audit
+    2026-SEP-05-other-title.md
+```
+
+**audit.md** is the project's audit index. It is updated continuously and contains:
+1. A terse running summary of the most relevant findings across all audits
+2. A table linking every audit file (`date`, `title`, `verdict`, `link`)
+3. Open issues that need human decision
+
+Rules:
+1. Every material experiment, review, incident, or policy change earns an audit.
+2. An audit is one immutable file per event: facts + verdict, dated ISO.
+3. After any audit, `audit.md` MUST be updated (summary + index row).
+4. Nothing is deleted: failure audits matter as much as success audits.
+5. Reviewer signs audit files it produces; the human reviews trends in `audit.md`.
+
+## Agent Self-Improvement (Kaizen)
+
+Agent definition files (`.opencode/agents/*.md`) and this AGENTS.md are living
+documents. They MUST be updated periodically to reflect what agents actually
+learn — never static.
+
+### Kaizen rules
+1. Any agent that finds a repeated failure or a superior technique MUST propose
+   an update to its own `.opencode/agents/*.md`.
+2. Improvements follow a mini PDCA: baseline → change → measure → adopt/revert.
+   No adoption without evidence.
+3. Behavioral rules require agent **confidence + evidence**: claims without a
+   source stay `[UNVERIFIED]` and do NOT become policy.
+4. Policy changes are narrower-scope than task scope; wider changes need human
+   approval via a `review:` commit.
+5. Every adopted improvement MUST be recorded in the project's `audits/audit.md`
+   (policy-change audit) — see Audits policy.
+6. Humans stay on the gate: nothing auto-applies a policy change without a
+   reviewable diff and human decision on significant changes.
+
+## Policy-as-Code & Traceability
+
+Rules should be enforceable, not just descriptive:
+1. Every policy MUST be machine-checkable where possible (grader, commit
+   signing, allowed_signers, file-permission matrices).
+2. Every decision bears a reason string traceable to evidence, not vibes.
+3. Audit trail: each run records what was done, which agent, which rule, and the
+   outcome — so a reviewer can answer "did the agent comply?" by inspecting the
+   record, not by guessing.
+4. If a policy can't be checked automatically, it MUST have an audit step
+   (reviewer) attached.
+
+## Failure Journal & Lessons
+
+1. Failure events are immutable facts: input, tool calls, error, version.
+2. Diagnosis (root cause) is a *candidate until verified* — the failing agent
+   does NOT auto-promote its own diagnosis to lesson.
+3. A lesson only becomes reusable after reproduction, evidence, or human review
+   (verified lessons only; weak candidates expire).
+4. Write lessons to `research/evolution/lessons.json`; link them back to the
+   source audit in `audits/`.
 
 ## Anti-Hallucination Ladder
 

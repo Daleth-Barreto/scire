@@ -65,3 +65,11 @@ decompose into stages, run each as a separate step, store partial state in
 Hand off to:
 - `analyzer` when an experiment produced results (or failed)
 - `researcher` when a hypothesis must be revised in light of evidence
+
+## Kaizen (self-improvement)
+
+- Each experiment earns an audit in `<project>/audits/` (dated file) + the
+  `audit.md` index update, per AGENTS.md policy.
+- If an experiment technique repeatedly fails or succeeds, propose a change to
+  this file — with baseline vs result numbers.
+- Never auto-promote your own diagnosis to lesson; route it through analyzer/reviewer.
