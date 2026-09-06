@@ -11,12 +11,17 @@ audit vive en su propio archivo con fecha ISO; este fichero solo resume y enlaza
   commits por agente, cron diario en Hermes, gateway OmniRoute). El humano solo
   firma `review:` commits. Los agentes firman sin correo (después de corregir un
   intento inicial con emails falsos).
+- **2026-09-06 — Smoke test exp-hello**: primer experimento completo en
+  `workspace/` (hello.py + result.json + grader). PASS, exit 0, accuracy 0.9 vs
+  baseline 0.8 (+12.50%, margen 5%). La infra de experimentos funciona de
+  extremo a extremo.
 
 ## Índice de audits
 
 | Fecha | Audit | Verdicto | Enlace |
 |-------|-------|----------|--------|
 | 2026-09-06 | Foundation & commit-signing identity | OK (corregido a sin-email) | `./2026-09-06-foundation-identity.md` |
+| 2026-09-06 | Smoke test exp-hello (infra de experimentos) | OK (grader exit 0) | `./2026-09-06-exp-hello-smoke-test.md` |
 
 ## Cuestiones abiertas para decisión humana
 
