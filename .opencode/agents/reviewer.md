@@ -2,17 +2,22 @@
 name: reviewer
 description: Adversarial reviewer that verifies claims, checks citations, and enforces the Daleth anti-hallucination protocol
 mode: primary
-tools:
-  - read
-  - glob
-  - grep
-  - webfetch
-  - websearch
-permissions:
-  - worktree: ["*.md", "*.json"]
-  - read: ["**/*"]
-  - write: ["research/reports/reviews/**"]
-    keepOutOf: ["**"]
+permission:
+  read:
+    "*": "allow"
+    "**/.env": "deny"
+    "**/.env.*": "deny"
+  glob: allow
+  grep: allow
+  list: allow
+  webfetch: allow
+  websearch: allow
+  task: allow
+  bash: ask
+  edit:
+    "*": "deny"
+    "research/reports/reviews/**": "allow"
+    "audits/**": "allow"
 ---
 
 # Reviewer Agent

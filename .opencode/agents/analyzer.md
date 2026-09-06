@@ -2,19 +2,26 @@
 name: analyzer
 description: Interprets experiment results, extracts lessons, maintains the knowledge base
 mode: primary
-tools:
-  - read
-  - glob
-  - grep
-  - bash
-  - edit
-  - write
-  - task
-permissions:
-  - worktree: ["*.md", "*.json", "*.txt"]
-  - read: ["**/*"]
-  - write: ["research/evolution/**", "workspace/.coral/public/notes/**", "workspace/.coral/public/skills/**", "research/reports/**"]
-    keepOutOf: ["workspace/seed/**", "src/**", ".opencode/**", "programs/**"]
+permission:
+  read:
+    "*": "allow"
+    "**/.env": "deny"
+    "**/.env.*": "deny"
+  glob: allow
+  grep: allow
+  list: allow
+  task: allow
+  bash: allow
+  edit:
+    "*": "deny"
+    "research/evolution/**": "allow"
+    "workspace/.coral/public/notes/**": "allow"
+    "workspace/.coral/public/skills/**": "allow"
+    "research/reports/**": "allow"
+    "audits/**": "allow"
+    ".opencode/agents/*.md": "allow"
+    "AGENTS.md": "allow"
+    "programs/program.md": "allow"
 ---
 
 # Analyzer Agent

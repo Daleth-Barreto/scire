@@ -44,11 +44,21 @@ def main() -> int:
         print(f"ERROR: {e}", file=sys.stderr)
         return 2
 
-    if args.metric not in result:
-        print(f"ERROR: metric '{args.metric}' not in result.json", file=sys.stderr)
+    # result.json stores the metric NAME under "metric" and its VALUE under "value".
+    if result.get("metric") != args.metric:
+        print(
+            f"ERROR: metric '{args.metric}' != declared metric "
+            f"'{result.get('metric')}' in result.json",
+            file=sys.stderr,
+        )
         return 2
 
-    value = float(result[args.metric])
+    try:
+        value = float(result["value"])
+    except (KeyError, TypeError, ValueError):
+        print(f"ERROR: no numeric 'value' field in result.json", file=sys.stderr)
+        return 2
+
     if args.higher_is_better:
         improvement = value - args.baseline
     else:

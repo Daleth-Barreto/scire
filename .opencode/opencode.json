@@ -1,24 +1,59 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "plugin": ["@omniroute/opencode-plugin", "opencode-sessions"],
-  "provider": {},
+  "plugin": [
+    "@omniroute/opencode-plugin",
+    "opencode-sessions"
+  ],
+  "provider": {
+    "omniroute": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "OmniRoute",
+      "options": {
+        "baseURL": "http://localhost:20128/v1",
+        "apiKey": "{env:OMNIROUTE_API_KEY}"
+      },
+      "models": {
+        "auto": {
+          "name": "Auto-Combo (fallback)"
+        },
+        "claude-opus-4-7": {
+          "name": "claude-opus-4-7"
+        },
+        "gpt-5.5": {
+          "name": "gpt-5.5"
+        },
+        "gemini-3-pro": {
+          "name": "gemini-3-pro"
+        },
+        "qwen:free": {
+          "name": "qwen:free"
+        }
+      }
+    }
+  },
   "mcp": {
     "colab": {
       "type": "stdio",
       "command": "uvx",
-      "args": ["git+https://github.com/googlecolab/colab-mcp"],
+      "args": [
+        "git+https://github.com/googlecolab/colab-mcp"
+      ],
       "timeout": 30000
     },
     "notebooklm": {
       "type": "stdio",
       "command": "npx",
-      "args": ["notebooklm-mcp@latest"],
+      "args": [
+        "notebooklm-mcp@latest"
+      ],
       "timeout": 30000
     },
     "omniroute": {
       "type": "stdio",
       "command": "omniroute",
-      "args": ["--mcp"],
+      "args": [
+        "--mcp"
+      ],
       "timeout": 30000
     }
   }

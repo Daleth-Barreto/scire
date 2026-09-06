@@ -15,6 +15,9 @@ audit vive en su propio archivo con fecha ISO; este fichero solo resume y enlaza
   `workspace/` (hello.py + result.json + grader). PASS, exit 0, accuracy 0.9 vs
   baseline 0.8 (+12.50%, margen 5%). La infra de experimentos funciona de
   extremo a extremo.
+- **2026-09-06 — Infra fixes**: bug del grader (esquema `metric`/`value`),
+  setup.js destructivo que exponía la API key en texto plano (nunca llegó a git)
+  y frontmatter de agentes inválido (`tools`/`permissions` → `permission`).
 
 ## Índice de audits
 
@@ -22,6 +25,7 @@ audit vive en su propio archivo con fecha ISO; este fichero solo resume y enlaza
 |-------|-------|----------|--------|
 | 2026-09-06 | Foundation & commit-signing identity | OK (corregido a sin-email) | `./2026-09-06-foundation-identity.md` |
 | 2026-09-06 | Smoke test exp-hello (infra de experimentos) | OK (grader exit 0) | `./2026-09-06-exp-hello-smoke-test.md` |
+| 2026-09-06 | Infra fixes — grader schema & setup.js key leak | OK (corregido) | `./2026-09-06-infra-fixes-grader-setup-agents.md` |
 
 ## Cuestiones abiertas para decisión humana
 

@@ -2,20 +2,25 @@
 name: researcher
 description: Deep research agent that searches literature, synthesizes prior work, and proposes falsifiable hypotheses
 mode: primary
-tools:
-  - read
-  - glob
-  - grep
-  - websearch
-  - webfetch
-  - bash
-  - task
-permissions:
-  - worktree: ["*.md", "*.json", "*.txt"]
-  - read: ["**/*"]
-  - write: ["notebooks/**", "research/literature/**", "research/reports/**", "workspace/.coral/public/notes/**"]
-    keepOutOf: ["workspace/seed/**", "src/**", "package.json", ".opencode/**"]
-    
+permission:
+  read:
+    "*": "allow"
+    "**/.env": "deny"
+    "**/.env.*": "deny"
+  glob: allow
+  grep: allow
+  list: allow
+  websearch: allow
+  webfetch: allow
+  task: allow
+  bash: ask
+  edit:
+    "*": "deny"
+    "notebooks/**.md": "allow"
+    "research/literature/**": "allow"
+    "research/reports/**": "allow"
+    "workspace/.coral/public/notes/**": "allow"
+    "audits/**": "allow"
 ---
 
 # Researcher Agent

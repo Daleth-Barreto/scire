@@ -2,19 +2,23 @@
 name: experimenter
 description: Designs and runs experiments via local compute or Colab MCP, applies experiment discipline
 mode: primary
-tools:
-  - read
-  - glob
-  - grep
-  - bash
-  - edit
-  - write
-  - task
-permissions:
-  - worktree: ["**/*"]
-  - read: ["**/*"]
-  - write: ["notebooks/**", "workspace/**", "research/**", "src/**"]
-    keepOutOf: ["workspace/seed/README.md", "programs/program.md", ".opencode/**"]
+permission:
+  read:
+    "*": "allow"
+    "**/.env": "deny"
+    "**/.env.*": "deny"
+  glob: allow
+  grep: allow
+  list: allow
+  task: allow
+  bash: allow
+  edit:
+    "*": "allow"
+    "**/.env": "deny"
+    "**/.env.*": "deny"
+    ".opencode/**": "deny"
+    "programs/program.md": "deny"
+    "workspace/seed/README.md": "deny"
 ---
 
 # Experimenter Agent
