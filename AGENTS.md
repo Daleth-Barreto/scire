@@ -36,15 +36,17 @@ Each agent has its own signing identity. The human only signs reviews.
 ### Agent identities
 | Agent | Git identity | Signs what |
 |-------|--------------|------------|
-| researcher | `scire-researcher <researcher@scire.local>` | research briefs, hypotheses, literature |
-| experimenter | `scire-experimenter <experimenter@scire.local>` | code, experiments, results |
-| analyzer | `scire-analyzer <analyzer@scire.local>` | lessons, insights, evolution |
-| reviewer | `scire-reviewer <reviewer@scire.local>` | review artifacts ONLY (never writes code) |
+| researcher | `scire-researcher` | research briefs, hypotheses, literature |
+| experimenter | `scire-experimenter` | code, experiments, results |
+| analyzer | `scire-analyzer` | lessons, insights, evolution |
+| reviewer | `scire-reviewer` | review artifacts ONLY (never writes code) |
 | **HUMAN** | your own identity | **reviews** — the ONLY commits you sign |
+
+**Agent commits carry NO email** — identity is just the agent name, nothing else.
 
 ### Rules
 1. **Every code commit is signed by the agent that produced it.**
-   - `git -c user.name="scire-experimenter" -c user.email="experimenter@scire.local" commit -S`
+   - `git -c user.name="scire-experimenter" -c user.email= commit -S`
 2. **Agent commits are NEVER signed by the human.**
 3. **Reviews are the ONLY commits signed by the human.**
    A review commit is a commit whose message begins with `review:` and which
@@ -55,11 +57,11 @@ Each agent has its own signing identity. The human only signs reviews.
    `Reviewed-by: <HUMAN>` — the human stamps final authority.
 
 ```bash
-# example — experimenter signs its own work
+# example — experimenter signs its own work (NO email)
 git -c user.name="scire-experimenter" \
-    -c user.email="experimenter@scire.local" \
+    -c user.email= \
     commit -S -m "exp: run ablations on attention sweep" \
-            -m "Melon.  Nope. This is the experimenter signing."
+            -m "Daleth. This is the experimenter signing."
 ```
 
 ---

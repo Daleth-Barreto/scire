@@ -33,38 +33,55 @@ $names = @{
     "analyzer"     = "scire-analyzer"
     "reviewer"     = "scire-reviewer"
 }
+
+# Solo el humano lleva correo (el real, tuyo). Los agentes NO llevan correo.
 $emails = @{
     "human"        = "alandaleth.hb@gmail.com"
-    "researcher"   = "researcher@scire.local"
-    "experimenter" = "experimenter@scire.local"
-    "analyzer"     = "analyzer@scire.local"
-    "reviewer"     = "reviewer@scire.local"
+    "researcher"   = ""
+    "experimenter" = ""
+    "analyzer"     = ""
+    "reviewer"     = ""
 }
 
 $isReview = $Identity -eq "human"
-if ($isReview -and $Message -notmatch "^review:") {
-    $Message = "review: $Message"
+
+$gitName = $names[$Identity]
+$gitEmail = $emails[$Identity]
+
+# Los agentes no llevan correo: user.email= vacío (literal), el humano lleva el real.
+if ($isReview) {
+    $emailArg = "-c", "user.email=$gitEmail"
+} else {
+    $emailArg = "-c", "user.email="
 }
 
-Write-Host "Daleth. Committing as $($names[$Identity]) (signed by $Identity)" -ForegroundColor Cyan
+Write-Host "Daleth. Committing as $gitName (signed by $Identity)" -ForegroundColor Cyan
 Write-Host "Signing key: $keyPath" -ForegroundColor DarkGray
 
 $env:GIT_SSH_COMMAND = "ssh -i `"$keyPath`" -o IdentitiesOnly=yes"
 
-git config user.name "$($names[$Identity])"
-git config user.email "$($emails[$Identity])"
 git config user.signingkey "$keyPath"
 git config gpg.format ssh
 git config commit.gpgsign true
 git config tag.gpgsign true
 
+if ($isReview -and $Message -notmatch "^review:") {
+    $Message = "review: $Message"
+}
+
+if (-not $isReview) {
+    Write-Host "Nota: los commits de agentes no llevan correo (identidad sin email)." -ForegroundColor DarkYellow
+}
+
+$identity = @("git", "-c", "user.name=$gitName") + $emailArg
+
 if ($ExtraArgs) {
-    git commit -S -m $Message @ExtraArgs
+    & $identity commit -S -m $Message @ExtraArgs
 } else {
-    git commit -S -m $Message
+    & $identity commit -S -m $Message
 }
 $result = $LASTEXITCODE
 if ($result -eq 0) {
-    Write-Host "Commit signed by $Identity OK. Trailer: Signed-off-by: $($names[$Identity]) <$($emails[$Identity])>"
+    Write-Host "Commit signed by $Identity OK."
 }
 exit $result
