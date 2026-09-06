@@ -1,0 +1,25 @@
+{
+  "name": "scire",
+  "version": "0.1.0",
+  "description": "Sistema de investigacion autonomo multi-agente con notebooks, simulaciones y evolucion de conocimiento",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "setup": "node src/setup.js",
+    "research": "opencode session --agent researcher",
+    "experiment": "opencode session --agent experimenter",
+    "analyze": "opencode session --agent analyzer",
+    "review": "opencode session --agent reviewer",
+    "omniroute": "omniroute run"
+  },
+  "dependencies": {
+    "@omniroute/opencode-plugin": "^0.2.1",
+    "@omniroute/opencode-provider": "^0.1.0",
+    "opencode-sessions": "^1.0.0",
+    "@ai-sdk/openai-compatible": "^2.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "@types/node": "^22.0.0"
+  }
+}

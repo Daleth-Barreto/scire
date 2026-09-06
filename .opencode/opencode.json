@@ -1,0 +1,25 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugin": ["@omniroute/opencode-plugin", "opencode-sessions"],
+  "provider": {},
+  "mcp": {
+    "colab": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": ["git+https://github.com/googlecolab/colab-mcp"],
+      "timeout": 30000
+    },
+    "notebooklm": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["notebooklm-mcp@latest"],
+      "timeout": 30000
+    },
+    "omniroute": {
+      "type": "stdio",
+      "command": "omniroute",
+      "args": ["--mcp"],
+      "timeout": 30000
+    }
+  }
+}
