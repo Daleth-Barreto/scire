@@ -73,12 +73,12 @@ if (-not $isReview) {
     Write-Host "Nota: los commits de agentes no llevan correo (identidad sin email)." -ForegroundColor DarkYellow
 }
 
-$identity = @("git", "-c", "user.name=$gitName") + $emailArg
+$gitBase = @("-c", "user.name=$gitName") + @("-c", "user.email=$gitEmail")
 
 if ($ExtraArgs) {
-    & $identity commit -S -m $Message @ExtraArgs
+    & git @gitBase commit -S -m $Message @ExtraArgs
 } else {
-    & $identity commit -S -m $Message
+    & git @gitBase commit -S -m $Message
 }
 $result = $LASTEXITCODE
 if ($result -eq 0) {

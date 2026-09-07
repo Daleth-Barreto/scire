@@ -4,13 +4,17 @@
   "description": "Sistema de investigacion autonomo multi-agente con notebooks, simulaciones y evolucion de conocimiento",
   "private": true,
   "type": "module",
+  "bin": {
+    "scire": "bin/scire.mjs"
+  },
   "scripts": {
     "setup": "node src/setup.js",
     "research": "opencode session --agent researcher",
     "experiment": "opencode session --agent experimenter",
     "analyze": "opencode session --agent analyzer",
     "review": "opencode session --agent reviewer",
-    "omniroute": "omniroute run"
+    "omniroute": "omniroute run",
+    "cli": "node bin/scire.mjs"
   },
   "dependencies": {
     "@omniroute/opencode-plugin": "^0.2.1",

@@ -23,9 +23,10 @@ audit vive en su propio archivo con fecha ISO; este fichero solo resume y enlaza
 
 | Fecha | Audit | Verdicto | Enlace |
 |-------|-------|----------|--------|
-| 2026-09-06 | Foundation & commit-signing identity | OK (corregido a sin-email) | `./2026-09-06-foundation-identity.md` |
-| 2026-09-06 | Smoke test exp-hello (infra de experimentos) | OK (grader exit 0) | `./2026-09-06-exp-hello-smoke-test.md` |
-| 2026-09-06 | Infra fixes — grader schema & setup.js key leak | OK (corregido) | `./2026-09-06-infra-fixes-grader-setup-agents.md` |
+| 2026-09-07 | smoke test cli scire | (verdicto) | `./2026-09-07-smoke-test-cli-scire.md` |
+| 2026-09-06 | infra fixes grader setup agents | (verdicto) | `./2026-09-06-infra-fixes-grader-setup-agents.md` |
+| 2026-09-06 | foundation identity | (verdicto) | `./2026-09-06-foundation-identity.md` |
+| 2026-09-06 | exp hello smoke test | (verdicto) | `./2026-09-06-exp-hello-smoke-test.md` |
 
 ## Cuestiones abiertas para decisión humana
 
