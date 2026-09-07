@@ -1,0 +1,74 @@
+{
+  "lessons": [
+    {
+      "id": "no-invent-identity-data",
+      "agent": "experimenter",
+      "date": "2026-09-06",
+      "hypothesis": "agents can sign commits with any identity",
+      "outcome": "failure",
+      "lesson": "Agents must never invent identity data (emails/usernames) without explicit human authorization.",
+      "context": "First agent commit used fake emails (*@scire.local); the human rejected and the keys were regenerated without email. verified via 2026-09-06-foundation-identity.md.",
+      "tags": ["identity", "commit-signing", "anti-hallucination"]
+    },
+    {
+      "id": "merge-never-overwrite-config",
+      "agent": "experimenter",
+      "date": "2026-09-06",
+      "hypothesis": "setup can regenerate config safely",
+      "outcome": "failure",
+      "lesson": "Setup must merge existing config, never overwrite: preserve plugin/mcp/keys; use {env:VAR} instead of plaintext.",
+      "context": "setup.js re-wrote opencode.json dropping plugins/MCPs and injected OMNIROUTE_API_KEY in plaintext (never reached git). verified via 2026-09-06-infra-fixes-grader-setup-agents.md.",
+      "tags": ["setup", "security", "config"]
+    },
+    {
+      "id": "validate-schemas-against-runtime",
+      "agent": "experimenter",
+      "date": "2026-09-06",
+      "hypothesis": "agent frontmatter format is tools:/permissions:",
+      "outcome": "failure",
+      "lesson": "Validate tool/config schemas against the runtime docs before fixing formats; mark [UNVERIFIED] otherwise.",
+      "context": "Agents assumed tools:/permissions: frontmatter; correct key is permission:. OpenCode would not load the agents. verified via 2026-09-06-infra-fixes-grader-setup-agents.md.",
+      "tags": ["schema", "opencode", "frontmatter"]
+    },
+    {
+      "id": "declare-metric-direction-before-grading",
+      "agent": "experimenter",
+      "date": "2026-09-06",
+      "hypothesis": "grader infers metric direction",
+      "outcome": "mixed",
+      "lesson": "State the metric's direction (higher/lower-is-better) before running the grader; the default flips the verdict.",
+      "context": "accuracy 0.9 vs baseline 0.8 without --higher-is-better reads as -12.50% and would FAIL. Ran with the flag and PASSed. verified via 2026-09-06-exp-hello-smoke-test.md.",
+      "tags": ["grader", "metrics", "experiment"]
+    },
+    {
+      "id": "windows-cmd-needs-shell-spawn",
+      "agent": "researcher",
+      "date": "2026-09-07",
+      "hypothesis": "spawnSync runs npm .cmd bins on Windows",
+      "outcome": "failure",
+      "lesson": "On Windows, spawnSync does not run .cmd bins without shell:true (or cmd.exe /d /s /c quoting); handle .cmd explicitly.",
+      "context": "CLI bin scire failed with ENOENT resolving .cmd; fixed by spawning cmd.exe with windowsVerbatimArguments. verified by reproduction (npm ENOENT), 2026-09-07-smoke-test-cli-scire.md.",
+      "tags": ["windows", "spawn", "cli"]
+    },
+    {
+      "id": "honor-preference-but-detect-alternatives",
+      "agent": "researcher",
+      "date": "2026-09-07",
+      "hypothesis": "install user's preferred TeX unconditionally",
+      "outcome": "mixed",
+      "lesson": "Honor a user's tool preference but detect already-installed alternatives; do not download a large dep when a working one exists.",
+      "context": "User preferred TinyTeX but MiKTeX 25.12 already present; setup used the existing pdflatex instead of forcing a ~150MB download. 2026-09-07-smoke-test-cli-scire.md.",
+      "tags": ["latex", "setup", "dependencies"]
+    },
+    {
+      "id": "ascii-owl-windows-console",
+      "agent": "analyzer",
+      "date": "2026-09-07",
+      "hypothesis": "fancy glyphs render reliably on Windows console",
+      "outcome": "mixed",
+      "lesson": "Keep mascot/UI art mostly plain ASCII for Windows console reliability; require a font check before introducing rare glyphs.",
+      "context": "Rebuilt SCIRE owl in src/cli/owl.mjs with ASCII and fractional 24-bit ANSI; Unicode (◉★) avoided deliberately. 2026-09-07-ui-redesign-owl-hermes.md.",
+      "tags": ["ui", "ascii", "windows"]
+    }
+  ]
+}
