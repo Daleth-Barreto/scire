@@ -3,61 +3,83 @@
 //   CYAN  = identidad SCIRE
 //   YELLOW = ojos del búho (mirada)
 //   GRAY  = plumaje / estructura
-//   DIM   = sombra
+//   DIM   = sombra / perchas
+//   ORANGE= pico
 //   GREEN/RED/MAGENTA = check/error/aviso (véase lib/util.mjs)
 
+const p = (r, g, b) => "\x1b[1;38;2;" + r + ";" + g + ";" + b + "m";
 const RESET = "\x1b[0m";
-const CYAN = "\x1b[38;2;0;229;255m";
-const EYES = "\x1b[38;2;255;214;10m";
-const BEAK = "\x1b[38;2;255;110;60m";
-const GRAY = "\x1b[38;2;150;165;180m";
-const DIM = "\x1b[38;2;95;110;125m";
-const bold = (r, g, b) => "\x1b[1;38;2;" + r + ";" + g + ";" + b + "m";
+const CYAN = p(0, 229, 255);
+const EYES = p(255, 214, 10);
+const GRAY = p(150, 165, 180);
+const DIM = p(95, 110, 125);
+const BEAK = p(255, 110, 60);
+const z = (c, s) => c + s + RESET;
+
+const eye = z(EYES, "( o )");
+const beak = z(BEAK, "/~~\\");
 
 // ── Poses ────────────────────────────────────────────────────────────────
 
-// VIGILANTE: setup / status / research — ojos abiertos, recto
+// VIGILANTE: setup / status / research — ojos abiertos, recto, en su percha
 const OWL_WATCH = [
-  CYAN + "          ,------------------." + RESET,
-  CYAN + "         /   " + EYES + "__" + RESET + CYAN + "        " + EYES + "__" + RESET + CYAN + "    \\" + RESET,
-  CYAN + "        |   " + EYES + "/  \\" + RESET + CYAN + "      " + EYES + "/  \\" + RESET + CYAN + "    |" + RESET,
-  CYAN + "        |   " + EYES + "|" + BEAK + "\u25cf" + RESET + CYAN + "|  (o)  |" + EYES + "\u25cf" + RESET + CYAN + "|    |" + RESET,
-  CYAN + "        |   " + EYES + "\\__/" + RESET + CYAN + "        " + EYES + "\\__/" + RESET + CYAN + "    |" + RESET,
-  GRAY + "        |      \\______/        |" + RESET,
-  GRAY + "        |   " + RESET + BEAK + "\\______/" + RESET + GRAY + "       |" + RESET,
-  GRAY + "        \\     " + RESET + GRAY + "______         |" + RESET,
-  DIM + "         \\      \\_\\_\\_\\  __ _" + RESET,
-  DIM + "          \\________\\_____\\_\\" + RESET,
+  `${CYAN}       .----------------.${RESET}`,
+  `${CYAN}      /                  \\\\${RESET}`,
+  `${CYAN}     |  ${eye}${CYAN}      ${eye}${CYAN}   |${RESET}`,
+  `${CYAN}     |   \\_/        \\_/    |${RESET}`,
+  `${CYAN}     |       \\      /      |${RESET}`,
+  `${CYAN}     |        \\    /       |${RESET}`,
+  `${CYAN}     |         ${beak}${CYAN}        |${RESET}`,
+  `${GRAY}     |        (____)       |${RESET}`,
+  `${GRAY}     |         |  |        |${RESET}`,
+  `${GRAY}      \\       /    \\      /${RESET}`,
+  `${GRAY}       \\     /      \\    /${RESET}`,
+  `${DIM}        \\   /        \\  /${RESET}`,
+  `${DIM}         \\_/          \\/${RESET}`,
+  `${DIM}          |              |${RESET}`,
+  `${DIM}           \\            /${RESET}`,
+  `${DIM}            \\__________/${RESET}`,
 ];
 
 // EN VUELO: report compile — alas desplegadas
 const OWL_FLY = [
-  DIM + "   ,'" + RESET + GRAY + "                " + RESET + DIM + "'.," + RESET,
-  DIM + "  f" + RESET + CYAN + "    .------------------.    " + RESET + DIM + "h" + RESET,
-  DIM + "  | " + RESET + CYAN + "   " + EYES + "o    " + RESET + CYAN + "__    " + EYES + "o" + RESET + CYAN + "     |\n" + RESET,
-  DIM + "  | " + RESET + CYAN + "   " + EYES + "\\    " + RESET + BEAK + "__" + RESET + CYAN + "  /__  " + EYES + "/" + RESET + CYAN + "     |" + RESET,
-  DIM + "  \\ " + RESET + GRAY + "     \\______/         /" + RESET,
-  DIM + "   \\" + RESET + GRAY + "     \\______/        /" + RESET,
-  DIM + "    \\" + RESET + GRAY + "______/\\_____/\\____/" + RESET,
+  `${CYAN}             _--__--_${RESET}`,
+  `${CYAN}            /   __   \\${RESET}`,
+  `${CYAN}      _.--  |  ${eye}${CYAN}  |  --._${RESET}`,
+  `${CYAN}   ,-'      |    |    |      '-.${RESET}`,
+  `${CYAN}  /         |  ${beak}${CYAN}    |         \\${RESET}`,
+  `${CYAN}  \\         | (____) |         /${RESET}`,
+  `${GRAY}   \\        |   |  |  |        /${RESET}`,
+  `${GRAY}    \\        \\  |  |  /        /${RESET}`,
+  `${GRAY}     \\        \\ | | | /        /${RESET}`,
+  `${DIM}      '-.       \\|_|_|/       .-'${RESET}`,
+  `${DIM}         '-.              .-'${RESET}`,
+  `${DIM}            '--.      .--'${RESET}`,
+  `${DIM}                '------'${RESET}`,
 ];
 
-// GUARDIÁN: help / audit — reposado
+// GUARDIÁN: help / audit — reposado, párpados a media asta
 const OWL_SEATED = [
-  CYAN + "          .------------------." + RESET,
-  CYAN + "         /     " + EYES + "\u25cf  \u25cf" + RESET + CYAN + "       \\" + RESET,
-  CYAN + "        |      " + BEAK + "\u25c0" + RESET + CYAN + "\\_/" + BEAK + "\u25b6" + RESET + CYAN + "       |" + RESET,
-  CYAN + "        |        ( )        |" + RESET,
-  GRAY + "        |        ('_')       |" + RESET,
-  GRAY + "        |   " + RESET + GRAY + "\\_____________/" + RESET + GRAY + "  |" + RESET,
-  GRAY + "        \\     " + RESET + GRAY + "\\________/" + RESET + GRAY + "      /" + RESET,
-  DIM + "         \\__   \\______/   __/" + RESET,
-  DIM + "            \\_ \\______/ _/" + RESET,
+  `${CYAN}        .-------------.${RESET}`,
+  `${CYAN}       /      ___      \\\\${RESET}`,
+  `${CYAN}      |      (o o)      |${RESET}`,
+  `${CYAN}      |    .-'-_-'-.     |${RESET}`,
+  `${CYAN}      |      ${beak}${CYAN}       |${RESET}`,
+  `${CYAN}      |    \\______/     |${RESET}`,
+  `${GRAY}      |   __|   |__     |${RESET}`,
+  `${GRAY}       \\  \\     /     /${RESET}`,
+  `${GRAY}        \\  \\_ _/     /${RESET}`,
+  `${DIM}         \\   | |    /${RESET}`,
+  `${DIM}          \\  | |   /${RESET}`,
+  `${DIM}           \\_|_|_  /${RESET}`,
+  `${DIM}             | |  /${RESET}`,
+  `${DIM}             |_|${RESET}`,
 ];
 
 // ── Logo SCIRE ───────────────────────────────────────────────────────────
 
 function scireLogo() {
-  const c = bold(0, 229, 255);
+  const c = p(0, 229, 255);
   const w = RESET;
   return [
     c + "\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258e \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258a\u2588\u2588\u258e\u2588\u2588\u2588\u2588\u2588\u2588\u2588 \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258e" + w,

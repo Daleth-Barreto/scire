@@ -6,6 +6,12 @@ audit vive en su propio archivo con fecha ISO; este fichero solo resume y enlaza
 
 ## Resumen ejecutivo (más relevante hasta la fecha)
 
+- **2026-09-07 — UI redesign (búho) + Hermes scire-ui**: la mascota ASCII se
+  reescribió de cero; las tres poses (watch/fly/seated) ahora son simétricas,
+  legibles y siguen un mismo lenguaje visual (ojos amarillos, pico, percha/alas/
+  cola según la pose), con paleta ANSI 24-bit fraccionada. Skill nueva de Hermes
+  `research/scire-ui` + cron semanal `scire-ui-polish` (lun 08:00) para que el
+  arte se siga mejorando.
 - **2026-09-07 — Diseño + org + Daleth-al-humano**: CLI `scire` rediseñada
   (búho 3 poses + logo ASCII con color, bin global re-linkeado, arreglado
   DEP0190 en run()). Dos agentes nuevos con base sota (orchestrator:
@@ -32,6 +38,7 @@ audit vive en su propio archivo con fecha ISO; este fichero solo resume y enlaza
 
 | Fecha | Audit | Verdicto | Enlace |
 |-------|-------|----------|--------|
+| 2026-09-07 | ui redesign owl hermes | APPROVE | `./2026-09-07-ui-redesign-owl-hermes.md` |
 | 2026-09-07 | design org agents daleth human | APPROVE | `./2026-09-07-design-org-agents-daleth-human.md` |
 | 2026-09-07 | smoke test cli scire | (verdicto) | `./2026-09-07-smoke-test-cli-scire.md` |
 | 2026-09-06 | infra fixes grader setup agents | (verdicto) | `./2026-09-06-infra-fixes-grader-setup-agents.md` |
