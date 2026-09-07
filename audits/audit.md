@@ -6,6 +6,15 @@ audit vive en su propio archivo con fecha ISO; este fichero solo resume y enlaza
 
 ## Resumen ejecutivo (más relevante hasta la fecha)
 
+- **2026-09-07 — Kaizen review de agentes (este audit)**: revisados los 6
+  agentes + AGENTS.md contra los 7 audits existentes. 3 ediciones con evidencia
+  (orchestrator: prohibición de inventar datos externos/de identidad —
+  correos falsos y esquemas de frontmatter; experimenter: declarar dirección
+  de métrica antes de correr el grader — near-miss en exp-hello; analyzer:
+  `research/evolution/lessons.json` debe existir y estar commiteado). Se
+  detectaron 2 gaps que NO se auto-aplican por ser política/seguridad o fuera
+  del repo: allowed_signers sin orchestrator/evaluator (verificación de firmas
+  rota) y lessons.json ausente. Sin cambios en la regla tool-bias (ya correcta).
 - **2026-09-07 — Refinamiento búho fly/logo (originalidad)**: en el loop
   `scire-ui` la pose `fly` apenas leía como búho y `seated` casi no se
   distinguía de `watch`. Se redibujaron las tres poses con un mismo lenguaje
@@ -46,20 +55,28 @@ audit vive en su propio archivo con fecha ISO; este fichero solo resume y enlaza
 
 | Fecha | Audit | Verdicto | Enlace |
 |-------|-------|----------|--------|
+| 2026-09-07 | kaizen agent-org review (evidencia audits) | APPROVE | `./2026-09-07-kaizen-agent-review.md` |
 | 2026-09-07 | owl fly/logo refinement (originalidad) | APPROVE | `./2026-09-07-owl-fly-refinement-originality.md` |
 | 2026-09-07 | ui redesign owl hermes | APPROVE | `./2026-09-07-ui-redesign-owl-hermes.md` |
 | 2026-09-07 | design org agents daleth human | APPROVE | `./2026-09-07-design-org-agents-daleth-human.md` |
-| 2026-09-07 | smoke test cli scire | (verdicto) | `./2026-09-07-smoke-test-cli-scire.md` |
-| 2026-09-06 | infra fixes grader setup agents | (verdicto) | `./2026-09-06-infra-fixes-grader-setup-agents.md` |
-| 2026-09-06 | foundation identity | (verdicto) | `./2026-09-06-foundation-identity.md` |
-| 2026-09-06 | exp hello smoke test | (verdicto) | `./2026-09-06-exp-hello-smoke-test.md` |
+| 2026-09-07 | smoke test cli scire | APPROVE | `./2026-09-07-smoke-test-cli-scire.md` |
+| 2026-09-06 | infra fixes grader setup agents | APPROVE | `./2026-09-06-infra-fixes-grader-setup-agents.md` |
+| 2026-09-06 | foundation identity | APPROVE | `./2026-09-06-foundation-identity.md` |
+| 2026-09-06 | exp hello smoke test | APPROVE | `./2026-09-06-exp-hello-smoke-test.md` |
 
 ## Cuestiones abiertas para decisión humana
 
+- **allowed_signers desactualizado**: `~/.ssh/scire_allowed_signers` solo lista
+  researcher/experimenter/analyzer/reviewer + humano; faltan `scire-orchestrator`
+  y `scire-evaluator` (creadas sus llaves el 2026-09-07). `git verify-commit` de
+  sus commits fallará hasta añadirlas. **Requiere intervención humana** (archivo
+  fuera del repo).
 - OmniRoute web-fetch sigue sin credenciales de provider (firecrawl/jina/tavily/
   tinyfish); los agentes lo evitan, pero una key desbloquearía la tool MCP.
 - `scire-daily-research` y `scire-daily-kaizen` comparten la franja 09:00;
   confirmar que no haya contención cuando research corra trabajos largos.
+- `research/evolution/lessons.json` no existe pese a que audits lo citan; el
+  analyzer debe recrearlo (asignado en kaizen).
 
 ## Reglas
 

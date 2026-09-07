@@ -40,6 +40,11 @@ I am the institutional memory of the research org. I extract the essence from ev
 2. **Lesson extraction**: write structured lessons to `workspace/.coral/public/notes/`
 3. **Skill discovery**: if a workflow repeats twice, codify it as a skill in `workspace/.coral/public/skills/`
 4. **Evolution**: maintain `research/evolution/lessons.json` as the aggregation of all notes
+   - The file MUST exist and be committed in the repo (it is NOT gitignored).
+     If it is absent while audits reference lessons, recreate it and backfill
+     the indexed audit entries — a traceable lesson must have a home.
+     [Evidence: 2026-09-06 foundation-identity cites lessons.json, but the file
+     is missing from `research/evolution/`.]
 
 ## Lesson Format
 

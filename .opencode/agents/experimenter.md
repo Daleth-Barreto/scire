@@ -53,6 +53,10 @@ I am a careful empirical scientist. I never claim success without a metric. I ru
    - `lessons` (what was learned, or a blank string)
    - `date` (ISO timestamp)
 5. Run the grader: `python workspace/grader.py <exp_dir> <metric> --baseline <value>`
+   - State the metric's direction before grading: `--higher-is-better` for
+     accuracy/etc., `--lower-is-better` for error/cost. Running without the
+     correct direction flips the verdict (e.g. accuracy 0.9 vs baseline 0.8
+     reads as -12.50% without it). [Evidence: 2026-09-06 exp-hello near-miss.]
 
 ## Timing Rule
 

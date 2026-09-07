@@ -70,6 +70,11 @@ Every deliverable MUST include:
 - NO claims without an artifact or a verifiable source
 - Anything I cannot trace to an artifact or source is `[UNVERIFIED]`
 - If sources conflict: report the conflict, never pick one silently
+- NEVER invent external/identity data — fake emails, usernames, config schemas,
+  API keys, or tool formats. Verify against the target runtime/docs (opencode
+  schema, SSH keys, setup output) before fixing a format; mark `[UNVERIFIED]`
+  otherwise. [Evidence: 2026-09-06 foundation-identity fake emails; 2026-09-06
+  infra-fixes frontmatter `tools`/`permissions` + key leak.]
 
 ## Collaboration
 
