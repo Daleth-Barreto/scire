@@ -1,79 +1,61 @@
-// SCIRE owl mascot — original ASCII art. Daleth: sin copias, sin atribuciones falsas.
+// SCIRE owl mascot — original "sig-sized" ASCII art, drawn for SCIRE.
+// Three poses share the same visual language (head dome, wide-set yellow eyes,
+// orange beak, gray plumage, dim shadow/perch). Each is small enough to stay
+// clean on a Windows console (PowerShell + Windows Terminal) beside the logo.
+//
 // Paleta:
-//   CYAN  = identidad SCIRE
-//   YELLOW = ojos del búho (mirada)
-//   GRAY  = plumaje / estructura
-//   DIM   = sombra / perchas
-//   ORANGE= pico
-//   GREEN/RED/MAGENTA = check/error/aviso (véase lib/util.mjs)
+//   CYAN   = identidad SCIRE
+//   YELLOW = ojos del búho
+//   ORANGE = pico
+//   GRAY   = plumaje / estructura
+//   DIM    = sombra / percha
+//
+// Glyph set prefers plain ASCII () / \ _ - | o ~ ' that Windows consoles render
+// reliably; only the block-letter logo uses Unicode box-drawing.
 
 const p = (r, g, b) => "\x1b[1;38;2;" + r + ";" + g + ";" + b + "m";
 const RESET = "\x1b[0m";
 const CYAN = p(0, 229, 255);
 const EYES = p(255, 214, 10);
+const ORANGE = p(255, 110, 60);
 const GRAY = p(150, 165, 180);
 const DIM = p(95, 110, 125);
-const BEAK = p(255, 110, 60);
-const z = (c, s) => c + s + RESET;
 
-const eye = z(EYES, "( o )");
-const beak = z(BEAK, "/~~\\");
+const e = (s) => EYES + s + RESET;
+const o = (s) => ORANGE + s + RESET;
+const g = (s) => GRAY + s + RESET;
+const d = (s) => DIM + s + RESET;
 
-// ── Poses ────────────────────────────────────────────────────────────────
+// ── Poses ───────────────────────────────────────────────────────────────
 
-// VIGILANTE: setup / status / research — ojos abiertos, recto, en su percha
+// VIGILANTE: status / research — alert standing owl, wide-open eyes, tufted
+// head dome, wings folded at the sides.
 const OWL_WATCH = [
-  `${CYAN}       .----------------.${RESET}`,
-  `${CYAN}      /                  \\\\${RESET}`,
-  `${CYAN}     |  ${eye}${CYAN}      ${eye}${CYAN}   |${RESET}`,
-  `${CYAN}     |   \\_/        \\_/    |${RESET}`,
-  `${CYAN}     |       \\      /      |${RESET}`,
-  `${CYAN}     |        \\    /       |${RESET}`,
-  `${CYAN}     |         ${beak}${CYAN}        |${RESET}`,
-  `${GRAY}     |        (____)       |${RESET}`,
-  `${GRAY}     |         |  |        |${RESET}`,
-  `${GRAY}      \\       /    \\      /${RESET}`,
-  `${GRAY}       \\     /      \\    /${RESET}`,
-  `${DIM}        \\   /        \\  /${RESET}`,
-  `${DIM}         \\_/          \\/${RESET}`,
-  `${DIM}          |              |${RESET}`,
-  `${DIM}           \\            /${RESET}`,
-  `${DIM}            \\__________/${RESET}`,
+  `   ${d("(")}${g("\\___/")}${d(")")}`,
+  `   ${g("(")}${e("o")}${g(" ")}${o("v")}${g(" ")}${e("o")}${g(")")}`,
+  `  ${g("/|:")}${e(".")}${o("V")}${e(".")}${g(":|\\")}`,
+  `   ${g("\\\\::::://")}`,
+  `   ${g("-----")}\`"" ""\`${g("-----")}`,
 ];
 
-// EN VUELO: report compile — alas desplegadas
+// EN VUELO: report compile — wings spread wide, ear tufts raised, feathery
+// tail flicking in flight. Same face grammar as watch, airborne body.
 const OWL_FLY = [
-  `${CYAN}             _--__--_${RESET}`,
-  `${CYAN}            /   __   \\${RESET}`,
-  `${CYAN}      _.--  |  ${eye}${CYAN}  |  --._${RESET}`,
-  `${CYAN}   ,-'      |    |    |      '-.${RESET}`,
-  `${CYAN}  /         |  ${beak}${CYAN}    |         \\${RESET}`,
-  `${CYAN}  \\         | (____) |         /${RESET}`,
-  `${GRAY}   \\        |   |  |  |        /${RESET}`,
-  `${GRAY}    \\        \\  |  |  /        /${RESET}`,
-  `${GRAY}     \\        \\ | | | /        /${RESET}`,
-  `${DIM}      '-.       \\|_|_|/       .-'${RESET}`,
-  `${DIM}         '-.              .-'${RESET}`,
-  `${DIM}            '--.      .--'${RESET}`,
-  `${DIM}                '------'${RESET}`,
+  `   ${d("/\\")}${g("   ")}${d("/\\")}`,
+  `  ${g("/( ")}${e("o")}${g(" ")}${o("v")}${g(" ")}${e("o")}${g(" )\\")}`,
+  `  ${g("\\_\\_")}${d("/")}${g("__/")}`,
+  `${d("  /")}${g("'")}${g(" '---' ")}${g("'")}${d("\\")}`,
+  `    ${d("~")}${g("'---'")}${d("~")}`,
 ];
 
-// GUARDIÁN: help / audit — reposado, párpados a media asta
+// GUARDIÁN: help / audit — resting on a perch, wings tucked, face relaxed
+// (half closed eyes), rounder body.
 const OWL_SEATED = [
-  `${CYAN}        .-------------.${RESET}`,
-  `${CYAN}       /      ___      \\\\${RESET}`,
-  `${CYAN}      |      (o o)      |${RESET}`,
-  `${CYAN}      |    .-'-_-'-.     |${RESET}`,
-  `${CYAN}      |      ${beak}${CYAN}       |${RESET}`,
-  `${CYAN}      |    \\______/     |${RESET}`,
-  `${GRAY}      |   __|   |__     |${RESET}`,
-  `${GRAY}       \\  \\     /     /${RESET}`,
-  `${GRAY}        \\  \\_ _/     /${RESET}`,
-  `${DIM}         \\   | |    /${RESET}`,
-  `${DIM}          \\  | |   /${RESET}`,
-  `${DIM}           \\_|_|_  /${RESET}`,
-  `${DIM}             | |  /${RESET}`,
-  `${DIM}             |_|${RESET}`,
+  `   ${d("(")}${g("\\___/")}${d(")")}`,
+  `   ${g("(")}${e("o")}${g("_")}${e("o")}${g(")")}`,
+  `  ${g("/( ")}${o("v")}${g(" )\\")}`,
+  `  ${g("( \\___/ )")}`,
+  `   ${g("---")}\`"" ""\`${g("---")}${d("~~")}`,
 ];
 
 // ── Logo SCIRE ───────────────────────────────────────────────────────────
@@ -94,7 +76,7 @@ function scireLogo() {
 // ── Banner ───────────────────────────────────────────────────────────────
 
 const POSE = {
-  watch: OWL_WATCH, // setup/status/research
+  watch: OWL_WATCH, // status/research
   fly: OWL_FLY,    // report compile
   seated: OWL_SEATED, // help/audit
 };

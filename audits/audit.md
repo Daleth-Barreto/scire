@@ -6,6 +6,14 @@ audit vive en su propio archivo con fecha ISO; este fichero solo resume y enlaza
 
 ## Resumen ejecutivo (más relevante hasta la fecha)
 
+- **2026-09-07 — Refinamiento búho fly/logo (originalidad)**: en el loop
+  `scire-ui` la pose `fly` apenas leía como búho y `seated` casi no se
+  distinguía de `watch`. Se redibujaron las tres poses con un mismo lenguaje
+  visual (ojos amarillos anchos, pico naranja centrado, plumaje gris, sombra
+  dim) pero bien diferenciadas: `fly` ahora es un búho en vuelo (tufted ears,
+  alas/cola extendidas), `seated` es reposado con `o_o` y cuerpo redondeado.
+  Se eliminó la firma ajena `jgs` de cada línea y el header declara el arte
+  como original de SCIRE (sin atribución falsa); `BEAK` ya se usa de verdad.
 - **2026-09-07 — UI redesign (búho) + Hermes scire-ui**: la mascota ASCII se
   reescribió de cero; las tres poses (watch/fly/seated) ahora son simétricas,
   legibles y siguen un mismo lenguaje visual (ojos amarillos, pico, percha/alas/
@@ -38,6 +46,7 @@ audit vive en su propio archivo con fecha ISO; este fichero solo resume y enlaza
 
 | Fecha | Audit | Verdicto | Enlace |
 |-------|-------|----------|--------|
+| 2026-09-07 | owl fly/logo refinement (originalidad) | APPROVE | `./2026-09-07-owl-fly-refinement-originality.md` |
 | 2026-09-07 | ui redesign owl hermes | APPROVE | `./2026-09-07-ui-redesign-owl-hermes.md` |
 | 2026-09-07 | design org agents daleth human | APPROVE | `./2026-09-07-design-org-agents-daleth-human.md` |
 | 2026-09-07 | smoke test cli scire | (verdicto) | `./2026-09-07-smoke-test-cli-scire.md` |
