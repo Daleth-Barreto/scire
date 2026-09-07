@@ -1,7 +1,9 @@
 import { spawnSync } from "node:child_process";
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import readline from "node:readline/promises";
+import { stdin, stdout } from "node:process";
 
 export const REPO_ROOT = dirname(dirname(dirname(dirname(fileURLToPath(import.meta.url)))));
 
@@ -37,32 +39,72 @@ export function err(msg) {
   log("  \u2718 " + msg, "\x1b[31m");
 }
 
+export async function ask(question, { yesIsDefault = false } = {}) {
+  const suffix = yesIsDefault ? " [Y/n] " : " [y/N] ";
+  const rl = readline.createInterface({ input: stdin, output: stdout });
+  try {
+    const line = await rl.question(question + suffix);
+    const a = line.trim().toLowerCase();
+    if (a === "" ) return yesIsDefault;
+    return a === "y" || a === "s" || a === "si";
+  } finally {
+    rl.close();
+  }
+}
+
+export function loadJson(file) {
+  if (!existsSync(file)) return null;
+  try {
+    return JSON.parse(readFileSync(file, "utf8"));
+  } catch {
+    return null;
+  }
+}
+
+export function saveJson(file, data) {
+  mkdirSync(dirname(file), { recursive: true });
+  writeFileSync(file, JSON.stringify(data, null, 2) + "\n");
+}
+
 export function resolveCmd(cmd) {
-  if (process.platform !== "win32") return cmd;
-  // En Windows, npm/uvx/etc. son .cmd y precisan el shell cmd.exe.
-  // Devolvemos siempre el comando tal cual, y run() usará shell:true para
-  // cualquier no-.exe, que es como funcionan los ejecutables de Windows.
+  if (process.platform !== "win32") return { file: cmd, needsShell: false };
+  const lower = cmd.toLowerCase();
   if (cmd.includes("\\") || cmd.includes("/")) {
-    const lower = cmd.toLowerCase();
     return { file: cmd, needsShell: lower.endsWith(".cmd") || lower.endsWith(".bat") };
   }
   const res = spawnSync("where.exe", [cmd], { encoding: "utf8" });
-  const hit = (res.stdout || "").trim().split(/\r?\n/)[0];
-  if (hit && /\.(exe)$/i.test(hit)) {
-    return { file: cmd, needsShell: false };
-  }
-  return { file: cmd, needsShell: true };
+  const hits = (res.stdout || "").trim().split(/\r?\n/).filter(Boolean);
+  const cmdBat = hits.find((h) => /\.(cmd|bat)$/i.test(h));
+  if (cmdBat) return { file: cmdBat, needsShell: true };
+  return { file: cmd, needsShell: false };
+}
+
+function cmdQuote(s) {
+  return '"' + String(s).replace(/"/g, '^"') + '"';
 }
 
 export function run(cmd, args, opts = {}) {
   const { file, needsShell } = resolveCmd(cmd);
-  const res = spawnSync(file, args, {
-    encoding: "utf8",
-    stdio: opts.silent === true ? "pipe" : "inherit",
-    cwd: opts.cwd || scireDir(),
-    env: process.env,
-    shell: needsShell === true,
-  });
+  const stdio = opts.silent === true ? "pipe" : "inherit";
+  let res;
+  if (needsShell) {
+    // cmd.exe /c sin shell:true → evita DEP0190
+    const line = [file, ...args.map(cmdQuote)].join(" ");
+    res = spawnSync(process.env.ComSpec || "cmd.exe", ["/d", "/s", "/c", line], {
+      encoding: "utf8",
+      stdio,
+      cwd: opts.cwd || scireDir(),
+      env: process.env,
+      windowsVerbatimArguments: true,
+    });
+  } else {
+    res = spawnSync(file, args, {
+      encoding: "utf8",
+      stdio,
+      cwd: opts.cwd || scireDir(),
+      env: process.env,
+    });
+  }
   if (opts.dontThrow) {
     return { ok: res.status === 0, status: res.status, stdout: res.stdout || "", stderr: res.stderr || "" };
   }

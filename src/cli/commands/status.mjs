@@ -4,7 +4,7 @@ import { homedir } from "node:os";
 import { run, log, ok, warn, err, scireDir } from "../lib/util.mjs";
 import { tinytexInstalled, anyLatexInstalled } from "../lib/latex.mjs";
 
-const AGENTS = ["researcher", "experimenter", "analyzer", "reviewer"];
+const AGENTS = ["orchestrator", "researcher", "experimenter", "analyzer", "evaluator", "reviewer"];
 
 function apiUp() {
   const res = run("curl.exe", ["-s", "-o", "NUL", "-w", "%{http_code}", "http://localhost:20128/v1/models"], { silent: true, dontThrow: true });

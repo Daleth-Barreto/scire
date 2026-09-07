@@ -1,6 +1,6 @@
 param(
     [Parameter(Mandatory=$true)]
-    [ValidateSet("human", "researcher", "experimenter", "analyzer", "reviewer")]
+    [ValidateSet("human", "orchestrator", "researcher", "experimenter", "analyzer", "evaluator", "reviewer")]
     [string]$Identity,
 
     [Parameter(Mandatory=$false)]
@@ -14,9 +14,11 @@ param(
 $keyDir = "$env:USERPROFILE\.ssh"
 $keys = @{
     "human"        = "$keyDir\scire_human"
+    "orchestrator" = "$keyDir\scire_agent_orchestrator"
     "researcher"   = "$keyDir\scire_agent_researcher"
     "experimenter" = "$keyDir\scire_agent_experimenter"
     "analyzer"     = "$keyDir\scire_agent_analyzer"
+    "evaluator"    = "$keyDir\scire_agent_evaluator"
     "reviewer"     = "$keyDir\scire_agent_reviewer"
 }
 
@@ -28,18 +30,22 @@ if (-not (Test-Path "$keyPath.pub")) {
 
 $names = @{
     "human"        = "Daleth-Barreto"
+    "orchestrator" = "scire-orchestrator"
     "researcher"   = "scire-researcher"
     "experimenter" = "scire-experimenter"
     "analyzer"     = "scire-analyzer"
+    "evaluator"    = "scire-evaluator"
     "reviewer"     = "scire-reviewer"
 }
 
 # Solo el humano lleva correo (el real, tuyo). Los agentes NO llevan correo.
 $emails = @{
     "human"        = "alandaleth.hb@gmail.com"
+    "orchestrator" = ""
     "researcher"   = ""
     "experimenter" = ""
     "analyzer"     = ""
+    "evaluator"    = ""
     "reviewer"     = ""
 }
 

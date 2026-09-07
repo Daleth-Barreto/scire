@@ -6,6 +6,15 @@ audit vive en su propio archivo con fecha ISO; este fichero solo resume y enlaza
 
 ## Resumen ejecutivo (más relevante hasta la fecha)
 
+- **2026-09-07 — Diseño + org + Daleth-al-humano**: CLI `scire` rediseñada
+  (búho 3 poses + logo ASCII con color, bin global re-linkeado, arreglado
+  DEP0190 en run()). Dos agentes nuevos con base sota (orchestrator:
+  descompone y delega; evaluator: falsación adversarial / método de choque).
+  Daleth ahora es la firma del HUMANO (sesión + memoria en
+  `.opencode/memory/session.json`); configuración previa (OmniRoute/Hermes/MCP/
+  LaTeX) se detecta y ADOPTA sin modificarse. 6 agentes registrados + claves
+  SSH para los 2 nuevos. Hermes: skill scire-research actualizada + nueva skill
+  scire-kaizen con cron diario (mejora continua de agentes).
 - **2026-09-06 — Fundación del sistema**: se creó la infraestructura base del
   research org (4 agentes con llaves SSH propias, protocolo Daleth, firma de
   commits por agente, cron diario en Hermes, gateway OmniRoute). El humano solo
@@ -23,6 +32,7 @@ audit vive en su propio archivo con fecha ISO; este fichero solo resume y enlaza
 
 | Fecha | Audit | Verdicto | Enlace |
 |-------|-------|----------|--------|
+| 2026-09-07 | design org agents daleth human | APPROVE | `./2026-09-07-design-org-agents-daleth-human.md` |
 | 2026-09-07 | smoke test cli scire | (verdicto) | `./2026-09-07-smoke-test-cli-scire.md` |
 | 2026-09-06 | infra fixes grader setup agents | (verdicto) | `./2026-09-06-infra-fixes-grader-setup-agents.md` |
 | 2026-09-06 | foundation identity | (verdicto) | `./2026-09-06-foundation-identity.md` |
@@ -30,7 +40,10 @@ audit vive en su propio archivo con fecha ISO; este fichero solo resume y enlaza
 
 ## Cuestiones abiertas para decisión humana
 
-- Ninguna por ahora.
+- OmniRoute web-fetch sigue sin credenciales de provider (firecrawl/jina/tavily/
+  tinyfish); los agentes lo evitan, pero una key desbloquearía la tool MCP.
+- `scire-daily-research` y `scire-daily-kaizen` comparten la franja 09:00;
+  confirmar que no haya contención cuando research corra trabajos largos.
 
 ## Reglas
 

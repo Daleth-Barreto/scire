@@ -37,6 +37,9 @@ reports/*.pdf
 # Agent configs (keep local)
 opencode.local.json
 
+# Session identity (human signature — never commit)
+.opencode/memory/
+
 # Legacy project files (pre-existing, not part of scire)
 docs/architecture/
 infra/supabase/

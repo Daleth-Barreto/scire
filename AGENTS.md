@@ -3,29 +3,38 @@
 SCIRE is an autonomous research system. This document is the binding contract
 for every agent AND every human who works in this repository.
 
-## ⚡ Daleth Protocol (MANDATORY)
+## ⚡ Daleth Protocol (the HUMAN's session marker)
 
-**Daleth** is the canonical first token of every message in this project.
+**Daleth is the human's signature**, not the agents'. Each human session opens
+with the human's name/signature (e.g. "Daleth" or the name they gave in
+`scire session new`). It is the door between sessions — and the memory anchor
+of who is speaking.
 
-**What it means:** Daleth (דָלֶת, Hebrew for "door") signals a *decision point*
-— before the door opens, we verify what is on the other side. Every agent uses
-it as a reasoning gate: "I am about to reason, and I commit to:
-1. grounding every factual claim,
-2. flagging uncertainty instead of hiding it."
+**Rules**
+1. The human opens sessions and messages with their signature. If the system
+   detects the human no longer leads with it, it suggests opening a new session
+   (`scire session new`). Memory belongs to sessions; a new session = a fresh
+   door.
+2. AGENTS NEVER impersonate the human's signature. Agents do NOT begin messages
+   with "Daleth" to fake authority.
+3. Every agent MUST ground its claims regardless of the protocol word:
+   - When about to hallucinate, write `[UNVERIFIED]` next to the claim.
+   - If a claim has a source, cite it inline `[^n]`.
+   - If sources conflict, report the conflict. Never silently pick one.
+4. The human's circuit-breaker still works: if the human types their signature
+   and nothing else, every agent STOPS, re-reads its last output, and lists any
+   unverified claims it made.
 
-### Rules
-1. EVERY message begins with `Daleth` (or `Daleth - REVIEW MODE` for reviewer).
-2. When an agent is about to hallucinate (high-uncertainty, no source), it MUST
-   write `[UNVERIFIED]` next to the claim — that is the "almost hallucinating"
-   warning the human asked for.
-3. If a claim has a source, cite it inline `[^n]`.
-4. If sources conflict, report the conflict. Never silently pick one.
-5. Any agent that catches itself about to make a confident claim with no source
-   MUST say: `Daleth, [UNVERIFIED] — I am not sure about this.`
-
-**The human's power:** if the human ever types just `Daleth` and nothing else,
-every agent must STOP, re-read its last output, and explicitly list any
-unverified claims it made. This is the anti-hallucination circuit-breaker.
+**Memory & sessions (improving general memory)**
+- `scire session new` asks the human's name once and stores it in
+  `.opencode/memory/session.json` (identity: name, marker, openedAt).
+- A session is a memory unit: each session anchors who spoke and when. New
+  goals should be explicit about whether they continue or replace prior work.
+- Agents persist knowledge in `research/evolution/lessons.json`, `audits/`,
+  and per-run artifacts. Memory is evidence, not vibes: nothing enters memory
+  without a traceable source or artifact.
+- Setup DETECTS and ADOPTS existing configuration (OmniRoute, Hermes, MCP,
+  LaTeX) and does NOT modify it without explicit human authorization.
 
 ---
 
@@ -36,9 +45,11 @@ Each agent has its own signing identity. The human only signs reviews.
 ### Agent identities
 | Agent | Git identity | Signs what |
 |-------|--------------|------------|
+| orchestrator | `scire-orchestrator` | plans, synthesized deliverables |
 | researcher | `scire-researcher` | research briefs, hypotheses, literature |
 | experimenter | `scire-experimenter` | code, experiments, results |
 | analyzer | `scire-analyzer` | lessons, insights, evolution |
+| evaluator | `scire-evaluator` | verdicts, audits of refutations |
 | reviewer | `scire-reviewer` | review artifacts ONLY (never writes code) |
 | **HUMAN** | your own identity | **reviews** — the ONLY commits you sign |
 
@@ -68,22 +79,34 @@ git -c user.name="scire-experimenter" \
 
 ## Multi-Agent Workflow
 
-1. **human** gives a research question.
-2. **researcher** Daleth → produces brief + hypotheses with citations.
-3. **human** reviews (signs the review if approved).
-4. **experimenter** Daleth → creates worktree, runs experiment, grader decides.
-5. **analyzer** Daleth → extracts lessons, updates `research/evolution/lessons.json`.
-6. **reviewer** Daleth - REVIEW MODE → verifies, gives verdict.
-7. **human** reviews final and signs with `Reviewed-by: <HUMAN>`.
+1. **human** gives a research goal (opens with their signature).
+2. **orchestrator** → decomposes the goal, delegates each subtask to a
+   specialist, and gates each deliverable by evidence.
+3. **researcher** → produces brief + hypotheses with citations.
+4. **experimenter** → creates worktree, runs experiment, grader decides.
+5. **evaluator** → shock method: actively tries to FALSIFY hypotheses/results
+   (Popper/TRIAGE-style). Verdict: SUPPORT/CHALLENGE/REJECT.
+6. **analyzer** → extracts lessons, updates `research/evolution/lessons.json`.
+7. **reviewer** → verifies every claim, checks citations, gives verdict.
+8. **human** reviews final and signs with `Reviewed-by: <HUMAN>`.
+
+The orchestrator may run steps 3–7 in any evidence-gated order, with a redesign
+loop (max 3 retries) before escalating the blockage to the human.
 
 ## Roles & Tools Matrix
 
 | Agent | Tools | Writes to |
 |-------|-------|-----------|
-| researcher | websearch, webfetch, read, notebooklm | research/literature, research/reports |
+| orchestrator | websearch, webfetch, read, task, bash | research/literature, research/reports, audits |
+| researcher | websearch, webfetch, read, notebooklm, bash | research/literature, research/reports |
 | experimenter | bash, edit, write, colab mcp | notebooks, workspace, src, audits of experiments |
 | analyzer | read, edit, write | research/evolution, workspace/.coral/public, audits |
+| evaluator | read, grep, webfetch, bash (read-only), task | research/reports, audits (verdicts) |
 | reviewer | read, grep, webfetch | research/reports/reviews, audits (verdicts) |
+
+**Tool-bias rule (applies to all agents):** prefer built-in `webfetch`/
+`websearch` over MCP web tools; NEVER use `omniroute_omniroute_web_fetch`
+unless a web-fetch provider credential is confirmed present.
 
 ## Free-First Policy
 

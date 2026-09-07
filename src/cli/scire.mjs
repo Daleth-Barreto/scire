@@ -2,21 +2,33 @@
 import { banner } from "./owl.mjs";
 import { cmdSetup } from "./commands/setup.mjs";
 import { cmdStatus } from "./commands/status.mjs";
-import { cmdResearch, cmdExperiment, cmdAnalyze, cmdReview } from "./commands/run.mjs";
+import {
+  cmdResearch,
+  cmdOrchestrate,
+  cmdEvaluate,
+  cmdExperiment,
+  cmdAnalyze,
+  cmdReview,
+} from "./commands/run.mjs";
 import { cmdExperimentRun, cmdExperimentNew } from "./commands/experiment.mjs";
 import { cmdAuditList, cmdAuditNew, cmdAuditIndex } from "./commands/audit.mjs";
 import { cmdReportNew, cmdReportCompile } from "./commands/report.mjs";
 import { cmdCommit } from "./commands/commit.mjs";
+import { createSession, loadSession } from "./lib/memory.mjs";
 
 const HELP = String.raw`
 Usage: scire <command> [args]
 
-Daleth. La puerta primero: cada comando verifica antes de actuar.
+El protocolo Daleth rige al humano: cada sesión abre con tu firma.
+Agentes verifican y citan; no fingen. Config previa se adopta, no se pisa.
 
 Top-level commands:
-  setup          Instala todo lo necesario (Node deps, uv, MCPs, TinyTeX LaTeX)
+  session        Abre/consulta la sesión (pide tu firma la primera vez)
+  setup          Instala lo que falta; detecta y ADOPTA config previa (OmniRoute, Hermes, MCP) sin tocarla sin permiso
   status         Chequea el estado del sistema (agentes, claves, OmniRoute, LaTeX)
   research       Delega investigación al agente researcher (argumento opcional: la pregunta)
+  orchestrate    Delega al agente orchestrator: descompone y coordina todo el ciclo
+  evaluate       Delega al agente evaluator: método de choque (falsación adversarial)
   experiment     Delega un experimento al agente experimenter
   analyze        Delega análisis/lecciones al agente analyzer
   review         Delega revisión adversarial al agente reviewer
@@ -32,8 +44,8 @@ Top-level commands:
   report new <reporte|audit|paper> [título]   Crea plantilla LaTeX en reports/
   report compile <slug>       Compila reports/<slug>.tex a PDF (requiere LaTeX)
 
-  commit <identidad> -m "mensaje"   Commit firmado (human|researcher|...); los
-                             agentes sin correo; el humano firma reviews
+  commit <identidad> -m "mensaje"   Commit firmado (human|orchestrator|researcher|experimenter|analyzer|evaluator|reviewer);
+                             los agentes sin correo; el humano firma reviews
 
   help           Muestra esta ayuda
 `;
@@ -49,6 +61,16 @@ switch (cmd) {
     banner();
     process.stdout.write(HELP);
     break;
+  case "session":
+    banner();
+    if (args[0] === "new") {
+      createSession(args[1]);
+    } else {
+      const s = loadSession();
+      if (s) process.stdout.write("  Sesión activa: " + s.name + " (desde " + (s.openedAt || "?") + ")\n");
+      else process.stdout.write("  No hay sesión. Usa `scire session new`.\n");
+    }
+    break;
   case "setup":
     banner();
     cmdSetup(args).catch((e) => {
@@ -63,6 +85,14 @@ switch (cmd) {
   case "research":
     banner();
     cmdResearch(args.join(" "));
+    break;
+  case "orchestrate":
+    banner();
+    cmdOrchestrate(args.join(" "));
+    break;
+  case "evaluate":
+    banner();
+    cmdEvaluate(args.join(" "));
     break;
   case "experiment":
     if (args[0] === "new") {

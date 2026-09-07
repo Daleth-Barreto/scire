@@ -10,7 +10,8 @@ aprenden de cada intento.
 
 ```
 ├── .opencode/
-│   ├── agents/          # 4 agentes: researcher, experimenter, analyzer, reviewer
+│   ├── agents/          # 6 agentes: orchestrator, researcher, experimenter, analyzer, evaluator, reviewer
+│   ├── memory/          # Identidad/sesión del humano (local, no commitear)
 │   └── opencode.json    # Config: OmniRoute, MCP (Colab + NotebookLM + OmniRoute)
 ├── programs/
 │   └── program.md       # Contrato del "research org"
@@ -55,12 +56,18 @@ npx omniroute@latest install   # o seguir docs del repo OmniRoute
 ```bash
 # Instalar la CLI globalmente (búho mascota)
 npm install -g .
-scire setup        # instala todo lo necesario (deps, uv, MCPs, LaTeX)
+scire setup        # detecta y ADOPTA config previa (OmniRoute/Hermes/MCP); instala lo que falta
 
-# Ciclo de investigación
+# Sesión e identidad (Daleth es la firma del humano)
+scire session new "tu firma"       # abre sesión (pide tu nombre/firma la primera vez)
+scire session                      # consulta la sesión activa
+
+# Ciclo de investigación (orquestado)
+scire orchestrate "objetivo"        # orchestrator → descompone, delega y sintetiza
 scire research "pregunta"          # researcher → brief + hipótesis con citas
 scire experiment <exp> <métrica>   # experimenter → run.py + grader
 scire analyze                      # analyzer → lecciones
+scire evaluate                     # evaluator → método de choque (falsación adversarial)
 scire review                       # reviewer → veredicto adversarial
 
 # LaTeX: todos los reportes se escriben en .tex y se compilan a PDF
@@ -73,7 +80,7 @@ scire audit index                 # regenera el índice audits/audit.md
 scire commit <identidad> -m "msg" # commit firmado (agentes sin correo, humano en reviews)
 
 # Utilidades
-scire status                      # chequeo del sistema (agentes, claves, LaTeX, OmniRoute)
+scire status                      # chequeo del sistema (6 agentes, claves, LaTeX, OmniRoute)
 ```
 
 La CLI detecta **cualquier** LaTeX del sistema (MiKTeX, TeX Live, ...); si no hay uno,

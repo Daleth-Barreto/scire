@@ -8,7 +8,7 @@ export function cmdCommit([identity, ...rest]) {
   const msg = i >= 0 ? rest.slice(i + 1).join(" ") : "commit via scire";
   const extra = i >= 0 ? rest.slice(0, i).filter((a) => a !== "-m") : rest.filter((a) => a.charAt(0) === "-");
   if (!identity) {
-    err("Uso: scire commit <human|researcher|experimenter|analyzer|reviewer> -m \"mensaje\"");
+    err("Uso: scire commit <human|orchestrator|researcher|experimenter|analyzer|evaluator|reviewer> -m \"mensaje\"");
     process.exit(1);
   }
   const args = ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", ps1, "-Identity", identity, "-Message", msg];
