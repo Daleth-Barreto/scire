@@ -75,8 +75,8 @@ audit vive en su propio archivo con fecha ISO; este fichero solo resume y enlaza
   tinyfish); los agentes lo evitan, pero una key desbloquearía la tool MCP.
 - `scire-daily-research` y `scire-daily-kaizen` comparten la franja 09:00;
   confirmar que no haya contención cuando research corra trabajos largos.
-- `research/evolution/lessons.json` no existe pese a que audits lo citan; el
-  analyzer debe recrearlo (asignado en kaizen).
+- `research/evolution/lessons.json`: recreado y commiteado en la corrida kaizen
+  de esta fecha (7 lecciones verificadas desde audits 2026-09-06/07). Cerrado.
 
 ## Reglas
 
