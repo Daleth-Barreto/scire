@@ -6,6 +6,16 @@ audit vive en su propio archivo con fecha ISO; este fichero solo resume y enlaza
 
 ## Resumen ejecutivo (más relevante hasta la fecha)
 
+- **2026-09-08 — Kaizen review de agentes (round 2, este audit)**: revisados los 6
+  agentes + AGENTS.md contra los audits 09-07/09-08. Hallazgo principal: el gap de
+  `allowed_signers` flaggeado el 09-07 ahora es FALLO CONFIRMADO en vivo — `git
+  verify-commit` devuelve "missing key" en b1f63c0 (scire-orchestrator) y ac688ee
+  (scire-evaluator) del ciclo H6; ni `scire-orchestrator` ni `scire-evaluator` están
+  en `~/.ssh/scire_allowed_signers`. 1 edición estrecha aplicada: reviewer.md ganó la
+  Responsibility 4 "Signature/identity check" (correr `git verify-commit`; "missing
+  key" = identidad no verificable, bloqueo) + nota en Verification Protocol — la
+  definición NO defendía contra commits no verificables. Sin regresión en reglas del
+  round 1 ni lessons.json (10 lecciones). Gap humano reabierto con prioridad alta.
 - **2026-09-08 — Research cycle H6 deterministic rule-first judging**: respondida la
   pregunta "¿puede el judging determinista (invariantes de estado, trazas de tool-call,
   canary) reemplazar/reducir los LLM judges en evaluación de seguridad agentic?".
@@ -79,6 +89,7 @@ audit vive en su propio archivo con fecha ISO; este fichero solo resume y enlaza
 
 | Fecha | Audit | Verdicto | Enlace |
 |-------|-------|----------|--------|
+| 2026-09-08 | kaizen agent-org review (round 2, evidencia allowed_signers) | APPROVE | `./2026-09-08-kaizen-agent-review.md` |
 | 2026-09-08 | H6 deterministic rule-first judging (research cycle) | APPROVE | `./2026-09-08-H6-deterministic-rule-first-judging-research.md` |
 | 2026-09-07 | research agentic red teaming testing protocol (brief) | APPROVE | `./2026-09-07-research-agentic-red-teaming-testing-protocol.md` |
 | 2026-09-07 | kaizen agent-org review (evidencia audits) | APPROVE | `./2026-09-07-kaizen-agent-review.md` |
@@ -92,17 +103,17 @@ audit vive en su propio archivo con fecha ISO; este fichero solo resume y enlaza
 
 ## Cuestiones abiertas para decisión humana
 
-- **allowed_signers desactualizado**: `~/.ssh/scire_allowed_signers` solo lista
-  researcher/experimenter/analyzer/reviewer + humano; faltan `scire-orchestrator`
-  y `scire-evaluator` (creadas sus llaves el 2026-09-07). `git verify-commit` de
-  sus commits fallará hasta añadirlas. **Requiere intervención humana** (archivo
-  fuera del repo).
+- **allowed_signers desactualizado — FALLO CONFIRMADO (prioridad alta)**: `~/.ssh/scire_allowed_signers`
+  solo lista researcher/experimenter/analyzer/reviewer + humano; faltan `scire-orchestrator` y
+  `scire-evaluator`. Confirmado en vivo: `git verify-commit` devuelve `missing key` en b1f63c0
+  (orchestrator) y ac688ee (evaluator) del proyecto H6. Sus commits están firmados pero NO son
+  verificables contra el trust anchor. Acción manual: añadir `scire_agent_orchestrator.pub` y
+  `scire_agent_evaluator.pub`. **Requiere intervención humana** (archivo fuera del repo, seguridad).
 - OmniRoute web-fetch sigue sin credenciales de provider (firecrawl/jina/tavily/
   tinyfish); los agentes lo evitan, pero una key desbloquearía la tool MCP.
 - `scire-daily-research` y `scire-daily-kaizen` comparten la franja 09:00;
   confirmar que no haya contención cuando research corra trabajos largos.
-- `research/evolution/lessons.json`: recreado y commiteado en la corrida kaizen
-  de esta fecha (7 lecciones verificadas desde audits 2026-09-06/07). Cerrado.
+- `research/evolution/lessons.json`: 10 lecciones verificadas (audits 2026-09-06/07/08). Cerrado.
 
 ## Reglas
 
