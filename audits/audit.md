@@ -6,6 +6,30 @@ audit vive en su propio archivo con fecha ISO; este fichero solo resume y enlaza
 
 ## Resumen ejecutivo (más relevante hasta la fecha)
 
+- **2026-09-08 — Research cycle H6 deterministic rule-first judging**: respondida la
+  pregunta "¿puede el judging determinista (invariantes de estado, trazas de tool-call,
+  canary) reemplazar/reducir los LLM judges en evaluación de seguridad agentic?".
+  Hallazgos empíricos: el state judge supera al trajectory judge en 7.73–11.72 pp ASR
+  (REDAgentBench, arXiv:2608.10669); los LLM judges ≈ moneda bajo distribución adversaria
+  (ReliableBench); existen vulnerabilidades agentic-only invisibles a nivel de modelo
+  (AgentSeer, arXiv:2509.17259), por lo que el action-graph debe juzgarse. Arquitectura
+  recomendada: harness en capas (traza de acciones → invariantes de estado → gate de
+  reproducibilidad → LLM judge residual), alineado con Free-First (capas 1–2 deterministas
+  y de costo cero). Verdictos del evaluator: H6-3 SUPPORT, H6-1/H6-2 CHALLENGE (umbrales
+  80%/<2% sin base empírica, [UNVERIFIED]), H6-4 REJECT (transferencia sintético→real sin
+  evidencia). Clave metodológica: no confundir "state-grounded evaluation" (LLM judge con
+  artefactos de estado) con "deterministic invariant checking" (TrustHarness). Sin
+  experimento ejecutado (no hay target LLM local); H6 pendiente para el experimenter.
+- **2026-09-07 — Brief protocolo testing de agentic red teaming**: respondida la
+  pregunta operativa "¿cómo testear?" (complementa el brief landscape del 09-06).
+  Lo más relevante: (1) la capa de medición está en crisis — LLM-as-judge ≈ moneda
+  bajo distribución adversarial (ReliableBench), el evaluador mueve el ASR ±33% en
+  Garak (22/25 categorías inestables), y el ASR es fracción de objetivos, no de
+  ataques; (2) anclajes empíricos: NIST/CAISI 2026 (13/13 frontier caídos) y ART 2025
+  (100% de comportamientos violados en 10–100 queries); (3) un PASS de escaneo no
+  prueba nada y el disclosure de evaluación baja el ASR 5–7 pp. Protocolo en capas
+  (garak/PyRIT/Promptfoo/manual) + harness determinista sin juez LLM (TrustHarness)
+  como vía barata para SCIRE. Hipótesis H1–H6, priorizada H6.
 - **2026-09-07 — Kaizen review de agentes (este audit)**: revisados los 6
   agentes + AGENTS.md contra los 7 audits existentes. 3 ediciones con evidencia
   (orchestrator: prohibición de inventar datos externos/de identidad —
@@ -55,6 +79,8 @@ audit vive en su propio archivo con fecha ISO; este fichero solo resume y enlaza
 
 | Fecha | Audit | Verdicto | Enlace |
 |-------|-------|----------|--------|
+| 2026-09-08 | H6 deterministic rule-first judging (research cycle) | APPROVE | `./2026-09-08-H6-deterministic-rule-first-judging-research.md` |
+| 2026-09-07 | research agentic red teaming testing protocol (brief) | APPROVE | `./2026-09-07-research-agentic-red-teaming-testing-protocol.md` |
 | 2026-09-07 | kaizen agent-org review (evidencia audits) | APPROVE | `./2026-09-07-kaizen-agent-review.md` |
 | 2026-09-07 | owl fly/logo refinement (originalidad) | APPROVE | `./2026-09-07-owl-fly-refinement-originality.md` |
 | 2026-09-07 | ui redesign owl hermes | APPROVE | `./2026-09-07-ui-redesign-owl-hermes.md` |
