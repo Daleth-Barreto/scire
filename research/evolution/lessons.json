@@ -69,6 +69,36 @@
       "lesson": "Keep mascot/UI art mostly plain ASCII for Windows console reliability; require a font check before introducing rare glyphs.",
       "context": "Rebuilt SCIRE owl in src/cli/owl.mjs with ASCII and fractional 24-bit ANSI; Unicode (◉★) avoided deliberately. 2026-09-07-ui-redesign-owl-hermes.md.",
       "tags": ["ui", "ascii", "windows"]
+    },
+    {
+      "id": "state-evidence-beats-transcript-evidence",
+      "agent": "researcher",
+      "date": "2026-09-08",
+      "hypothesis": "transcript-only judging captures agentic harm",
+      "outcome": "mixed",
+      "lesson": "For agentic safety evaluation, judge from state artifacts (receipts, final-state snapshots, canary tokens, tool-call traces) rather than transcript/LLM-reasoning alone; state-grounded judges report 7.73-11.72 pp higher ASR than trajectory judges.",
+      "context": "REDAgentBench (arXiv:2608.10669) 1661 cases, 6 models x 3 harnesses, McNemar p<=6.54e-5. Prior SCIRE lesson 'declare-metric-direction-before-grading' is the same discipline at a smaller scale.",
+      "tags": ["evaluation", "red-teaming", "agents", "measurement"]
+    },
+    {
+      "id": "distinguish-state-grounded-from-deterministic-judging",
+      "agent": "evaluator",
+      "date": "2026-09-08",
+      "hypothesis": "state-grounded evaluation equals deterministic invariant checking",
+      "outcome": "failure",
+      "lesson": "Do not conflate 'state-grounded evaluation' (an LLM judge fed receipts/DB snapshots, e.g. REDAgentBench State Judge) with 'deterministic invariant checking' (TrustHarness MustCall/ForbidCall/NoCanaryLeak). They have different reliability and cost; coverage claims must be measured per class, not assumed.",
+      "context": "Evaluator shock-test of H6 brief: the brief's '80% coverage' and '<2% marginal LLM value' figures were [UNVERIFIED] estimates presented with excess confidence. Verified via evaluation 2026-09-08-H6-deterministic-rule-first-judging-evaluation.md.",
+      "tags": ["evaluation", "red-teaming", "measurement", "anti-hallucination"]
+    },
+    {
+      "id": "coverage-thresholds-need-empirical-basis",
+      "agent": "evaluator",
+      "date": "2026-09-08",
+      "hypothesis": "estimating coverage thresholds is acceptable in a hypothesis",
+      "outcome": "failure",
+      "lesson": "Coverage thresholds (e.g. 'invariants cover >=80% of high-severity failures') are empirical claims that must be measured, not estimated; flag invented thresholds [UNVERIFIED] and design the experiment to falsify them (H6-1, H6-2).",
+      "context": "Evaluator rejected the unmotivated 80% and <2% thresholds in the H6 brief. Lesson reinforces anti-hallucination ladder Tier 0: [UNVERIFIED] flag before presenting estimates as findings.",
+      "tags": ["measurement", "anti-hallucination", "hypotheses"]
     }
   ]
 }
