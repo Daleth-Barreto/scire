@@ -6,6 +6,19 @@ audit vive en su propio archivo con fecha ISO; este fichero solo resume y enlaza
 
 ## Resumen ejecutivo (más relevante hasta la fecha)
 
+- **2026-09-09 — Research cycle efficacy delta (determinista vs LLM judges)**: respondida al
+  CHALLENGE del H6 sobre umbrales inventados (80%/<2%/0.7). El delta de eficacia NO es un
+  número único sino *type-dependent*: los invariantes deterministas dominan en harms
+  observables en la traza (NetInjectBench 0/240 ≤1.58% vs Two-Pass LLM Judge 10%; TrustBench
+  87% de reducción, <200ms), pero son estructuralmente ciegos a harms de intención semántica
+  (exfiltración codificada, motivación). La clasificación (a)-observable/(b)-semántico es la
+  contribución clave y corrige el riesgo metodológico del H6. Hallazgo de ingeniería de alto
+  valor: *la calidad del grounding gana al tipo de juez* — el gate de policy metadata alcanza
+  0/240 unsafe manteniendo 99.17% de utilidad, mientras el allowlisting estático (grounding
+  rígido) colapsa a 0% utilidad/100% overblock. Evaluator: ED-1 CHALLENGE (el 77% silent-recall
+  es del step-judge LLM, NO de un gate determinista — no medido; exige reframing antes de
+  ejecutar), ED-2 SUPPORT, ED-3 SUPPORT, OVERALL APPROVE. +3 lecciones (13 total). Sin
+  experimento (sin target LLM local); recomendado: harness MCP sintético con fault injection.
 - **2026-09-08 — Kaizen review de agentes (round 2, este audit)**: revisados los 6
   agentes + AGENTS.md contra los audits 09-07/09-08. Hallazgo principal: el gap de
   `allowed_signers` flaggeado el 09-07 ahora es FALLO CONFIRMADO en vivo — `git
@@ -89,6 +102,7 @@ audit vive en su propio archivo con fecha ISO; este fichero solo resume y enlaza
 
 | Fecha | Audit | Verdicto | Enlace |
 |-------|-------|----------|--------|
+| 2026-09-09 | efficacy delta determinista vs LLM judges (research cycle) | APPROVE | `./2026-09-09-efficacy-delta-judging-research.md` |
 | 2026-09-08 | kaizen agent-org review (round 2, evidencia allowed_signers) | APPROVE | `./2026-09-08-kaizen-agent-review.md` |
 | 2026-09-08 | H6 deterministic rule-first judging (research cycle) | APPROVE | `./2026-09-08-H6-deterministic-rule-first-judging-research.md` |
 | 2026-09-07 | research agentic red teaming testing protocol (brief) | APPROVE | `./2026-09-07-research-agentic-red-teaming-testing-protocol.md` |
