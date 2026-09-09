@@ -99,6 +99,36 @@
       "lesson": "Coverage thresholds (e.g. 'invariants cover >=80% of high-severity failures') are empirical claims that must be measured, not estimated; flag invented thresholds [UNVERIFIED] and design the experiment to falsify them (H6-1, H6-2).",
       "context": "Evaluator rejected the unmotivated 80% and <2% thresholds in the H6 brief. Lesson reinforces anti-hallucination ladder Tier 0: [UNVERIFIED] flag before presenting estimates as findings.",
       "tags": ["measurement", "anti-hallucination", "hypotheses"]
+    },
+    {
+      "id": "efficacy-delta-is-type-dependent",
+      "agent": "evaluator",
+      "date": "2026-09-09",
+      "hypothesis": "deterministic invariants always dominate LLM judges",
+      "outcome": "failure",
+      "lesson": "The efficacy delta between deterministic invariant checking and LLM judging is not a single number but type-dependent: deterministic gates dominate on observable-trace harms (tool misuse, canary leak, approval bypass) where they achieve near-zero leak (NetInjectBench 0/240 <=1.58% vs LLM judge 10%), but are structurally blind to semantic-intent harms. The crossover point must be measured per harm class, not assumed.",
+      "context": "ED-2 evaluator SUPPORT: the (a)-observable / (b)-semantic classification from trajectory-judge (arXiv:2609.00038) and NetInjectBench (arXiv:2607.10490) corrects the H6 evaluator's core concern about invented thresholds.",
+      "tags": ["evaluation", "safety", "measurement", "hypotheses"]
+    },
+    {
+      "id": "grounding-quality-beats-judge-type",
+      "agent": "evaluator",
+      "date": "2026-09-09",
+      "hypothesis": "deterministic gating alone determines safety efficacy",
+      "outcome": "mixed",
+      "lesson": "The largest measured efficacy delta is not deterministic-vs-LLM per se but whether the checker is grounded in trusted, non-artifact state (metadata, policy, canonical action objects) versus operating on untrusted text. A metadata-aware policy gate achieves 0/240 unsafe actions while preserving 99.17%+ usefulness; static allowlisting (rigid, non-adapted grounding) achieves 0% usefulness / 100% overblock on the same corpus. The quality of the grounding policy is the decisive variable.",
+      "context": "ED-3 evaluator SUPPORT: NetInjectBench (arXiv:2607.10490) direct comparison; CAVA (arXiv:2607.13716) canonicalization substrate. The engineering implication: invest in grounding quality (policy specification, canonical actions) rather than just choosing deterministic vs LLM.",
+      "tags": ["safety", "engineering", "grounding", "evaluation"]
+    },
+    {
+      "id": "deterministic-gate-silent-recall-is-unmeasured",
+      "agent": "evaluator",
+      "date": "2026-09-09",
+      "hypothesis": "a deterministic gate achieves >=77% silent-fault recall (matching the LLM step-judge)",
+      "outcome": "failure",
+      "lesson": "The step-rubric LLM judge's 77% silent-fault recall (trajectory-judge arXiv:2609.00038) is an LLM performance baseline, NOT a deterministic-gate achievement. No study has measured deterministic-gate recall on the same fault-injected corpus. Hypotheses must not import LLM judge performance as the target for deterministic systems — the two have different failure modes. Silent faults may be precisely the category where deterministic gates underperform because the observable trace appears normal.",
+      "context": "ED-1 evaluator CHALLENGE: the brief imported the 77% step-judge number as a deterministic gate target. Required modification: reframe as 'measure deterministic gate recall independently' rather than claiming it matches the LLM step-judge.",
+      "tags": ["evaluation", "measurement", "hypotheses", "anti-hallucination"]
     }
   ]
 }
