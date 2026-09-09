@@ -6,6 +6,18 @@ audit vive en su propio archivo con fecha ISO; este fichero solo resume y enlaza
 
 ## Resumen ejecutivo (más relevante hasta la fecha)
 
+- **2026-09-10 — Kaizen agent-org review (round 3, este audit)**: revisados los 6
+  agentes + AGENTS.md contra los audits 09-08/09-09 con verificación de firmas en
+  vivo. 2 ediciones estrechas: researcher.md ganó la regla anti-umbrales-inventados
+  (un número en un brief = valor citado O target experimental pre-especificado, nunca
+  un hallazgo por estar declarado — repetido 2 ciclos: H6 80%/<2%/0.7, efficacy-delta
+  95%/1.5x), y reviewer.md ganó la "Allowed-signers drift check" (el `-c user.name`
+  es cosmético: `git verify-commit` reporta el principal del trust anchor). Hallazgo
+  de trazabilidad: 3 commits de 3 agentes verifican TODOS como `scire-analyzer`
+  (c938d41 autorado "scire_agent_reviewer", c3fa735 "scire-researcher", b1f63c0
+  "scire-orchestrator") — la clave anclada firma por `scire-analyzer` sin importar el
+  nombre. `allowed_signers` sigue sin orchestrator/evaluator (missing key b1f63c0 y
+  ac688ee re-confirmado). Gap humano REABIERTO con doble mismatch de naming.
 - **2026-09-09 — Research cycle efficacy delta (determinista vs LLM judges)**: respondida al
   CHALLENGE del H6 sobre umbrales inventados (80%/<2%/0.7). El delta de eficacia NO es un
   número único sino *type-dependent*: los invariantes deterministas dominan en harms
@@ -102,6 +114,7 @@ audit vive en su propio archivo con fecha ISO; este fichero solo resume y enlaza
 
 | Fecha | Audit | Verdicto | Enlace |
 |-------|-------|----------|--------|
+| 2026-09-10 | kaizen agent-org review (round 3, signature drift + anti-threshold rule) | APPROVE | `./2026-09-10-kaizen-agent-review-round3.md` |
 | 2026-09-09 | efficacy delta determinista vs LLM judges (research cycle) | APPROVE | `./2026-09-09-efficacy-delta-judging-research.md` |
 | 2026-09-08 | kaizen agent-org review (round 2, evidencia allowed_signers) | APPROVE | `./2026-09-08-kaizen-agent-review.md` |
 | 2026-09-08 | H6 deterministic rule-first judging (research cycle) | APPROVE | `./2026-09-08-H6-deterministic-rule-first-judging-research.md` |
@@ -117,12 +130,15 @@ audit vive en su propio archivo con fecha ISO; este fichero solo resume y enlaza
 
 ## Cuestiones abiertas para decisión humana
 
-- **allowed_signers desactualizado — FALLO CONFIRMADO (prioridad alta)**: `~/.ssh/scire_allowed_signers`
+- **allowed_signers desactualizado + doble mismatch de naming de claves — FALLO CONFIRMADO, REABIERTO (prioridad alta)**: `~/.ssh/scire_allowed_signers`
   solo lista researcher/experimenter/analyzer/reviewer + humano; faltan `scire-orchestrator` y
-  `scire-evaluator`. Confirmado en vivo: `git verify-commit` devuelve `missing key` en b1f63c0
-  (orchestrator) y ac688ee (evaluator) del proyecto H6. Sus commits están firmados pero NO son
-  verificables contra el trust anchor. Acción manual: añadir `scire_agent_orchestrator.pub` y
-  `scire_agent_evaluator.pub`. **Requiere intervención humana** (archivo fuera del repo, seguridad).
+  `scire-evaluator`. Reconfirmado en vivo esta corrida: `git verify-commit` devuelve `missing key` en b1f63c0
+  (orchestrator) y ac688ee (evaluator). Además, 3 commits autorados por agentes distintos (c938d41
+  review kaizen, c3fa735 research, b1f63c0 research) **verifican todos como `scire-analyzer`** — la clave
+  anclada firma por `scire-analyzer` sin importar el nombre. Hay triple naming en juego: AGENTS.md usa
+  `scire-*` guion, scire-kaizen usa `scire_agent_*` underscore, y las claves `scire_agent_*` firman como
+  `scire-analyzer`. Acción manual: alinear los principals, añadir orchestrator/evaluator, y comprobar qué
+  clave real firma cada agente. **Requiere intervención humana** (archivo fuera del repo, seguridad).
 - OmniRoute web-fetch sigue sin credenciales de provider (firecrawl/jina/tavily/
   tinyfish); los agentes lo evitan, pero una key desbloquearía la tool MCP.
 - `scire-daily-research` y `scire-daily-kaizen` comparten la franja 09:00;

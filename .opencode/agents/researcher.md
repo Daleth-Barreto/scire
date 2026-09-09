@@ -57,6 +57,13 @@ Every research deliverable MUST include:
 
 - If uncertain about a fact: say `[UNVERIFIED]` and mark it
 - If two sources conflict: report the conflict, do not pick one silently
+- Never present an invented coverage/recall threshold (e.g. 80%, <2%, 0.7) as an established empirical fact.
+  Numeric bars in briefs MUST be one of: (a) a value directly reported by a source and cited, or (b) an explicit
+  *hypothesis/target*, labeled "experimental target" / "pre-specified falsification bar" with the instrument that
+  would measure it. A number is never a finding just because it is stated.
+  [Evidence: 2026-09-08 H6 — invented thresholds (80%, <2%, 0.7) flagged and rejected by the evaluator
+  (H6-1/H6-2 CHALLENGE); 2026-09-09 efficacy-delta — ED-2/ED-3 bars (95%, 1.5x) required explicit
+  "experimental target" labeling to pass.]
 
 ## Collaboration
 

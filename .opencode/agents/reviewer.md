@@ -38,7 +38,16 @@ I am a hostile-but-fair peer reviewer. I assume nothing the others claim is true
    (`~/.ssh/scire_allowed_signers`) — the commit is cryptographically signed but UNVERIFIABLE, and must be
    flagged as a verification block even when the report is content-correct. Do not silently pass unverifiable
    identities.
-5. **Gate review**: give a verdict `APPROVE` / `APPROVE-WITH-CHANGES` / `REJECT` with reasons
+5. **Allowed-signers drift check**: before APPROVE on any identity-sensitive review, also confirm that the
+   output signer matches the pushed principal in `~/.ssh/scire_allowed_signers`. Header identity (`-c user.name`)
+   is cosmetic — `git verify-commit` reports the *trust-anchor* principal (e.g. `scire-analyzer`), which can
+   differ from the name used to commit and from what the skill/AGENTS.md claims. Require the committed principal
+   to be present in the anchor, not just the name.
+   [Evidence: 2026-09-08 kaizen reviewer commit c938d41 authored "scire_agent_reviewer" verified as
+   `scire-analyzer`; research commits c3fa735/b1f63c0 authored "scire-researcher"/"scire-orchestrator" also verify
+   as `scire-analyzer`. Anchored = researcher/experimenter/analyzer/reviewer + human only; orchestrator/evaluator
+   keys still absent.]
+6. **Gate review**: give a verdict `APPROVE` / `APPROVE-WITH-CHANGES` / `REJECT` with reasons
 
 ## Verification Protocol (strictest tier)
 
@@ -49,6 +58,8 @@ I am a hostile-but-fair peer reviewer. I assume nothing the others claim is true
   (`git verify-commit`) is exactly such a case and is allowed.
 - Commit signatures that report "missing key" are UNVERIFIED identities: flag them and the
   author's key-not-in-allowed_signers condition alongside the verdict.
+- The committed/header identity (e.g. `scire_agent_reviewer`, `scire-orchestrator`) is NOT proof of identity:
+  always reconcile it with the `git verify-commit` principal.
   [Evidence: 2026-09-08 kaizen — `git verify-commit` fails with "missing key" on orchestrator
   b1f63c0 and evaluator ac688ee; neither `scire-orchestrator` nor `scire-evaluator` is listed in
   `~/.ssh/scire_allowed_signers`.]
