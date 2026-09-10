@@ -15,6 +15,7 @@ import { cmdAuditList, cmdAuditNew, cmdAuditIndex } from "./commands/audit.mjs";
 import { cmdReportNew, cmdReportCompile } from "./commands/report.mjs";
 import { cmdCommit } from "./commands/commit.mjs";
 import { createSession, loadSession } from "./lib/memory.mjs";
+import { startTui } from "./tui/app.mjs";
 
 const HELP = String.raw`
 Usage: scire <command> [args]
@@ -24,6 +25,8 @@ Agentes verifican y citan; no fingen. Config previa se adopta, no se pisa.
 
 Top-level commands:
   session        Abre/consulta la sesión (pide tu firma la primera vez)
+  tui            ARRANCA LA SHELL INTERACTIVA (Ink): prompt persistente, salida
+                 de agentes en vivo, y visor de PDF/LaTeX/notebooks a tiempo real
   setup          Instala lo que falta; detecta y ADOPTA config previa (OmniRoute, Hermes, MCP) sin tocarla sin permiso
   status         Chequea el estado del sistema (agentes, claves, OmniRoute, LaTeX)
   research       Delega investigación al agente researcher (argumento opcional: la pregunta)
@@ -52,6 +55,18 @@ Top-level commands:
 
 const [cmd, ...args] = process.argv.slice(2);
 
+// `scire` a secas abre la shell interactiva (estilo opencode) cuando hay TTY.
+if (cmd === undefined || cmd === "") {
+  if (process.stdin.isTTY && process.stdout.isTTY) {
+    startTui();
+  } else {
+    // sin TTY → muestra ayuda one-shot (no intenta raw mode de Ink)
+    banner();
+    process.stdout.write(HELP);
+  }
+  process.exit(0);
+}
+
 switch (cmd) {
   case undefined:
   case "":
@@ -70,6 +85,9 @@ switch (cmd) {
       if (s) process.stdout.write("  Sesión activa: " + s.name + " (desde " + (s.openedAt || "?") + ")\n");
       else process.stdout.write("  No hay sesión. Usa `scire session new`.\n");
     }
+    break;
+  case "tui":
+    startTui();
     break;
   case "setup":
     banner();

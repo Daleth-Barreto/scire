@@ -14,16 +14,23 @@
     "analyze": "opencode session --agent analyzer",
     "review": "opencode session --agent reviewer",
     "omniroute": "omniroute run",
-    "cli": "node bin/scire.mjs"
+    "cli": "node bin/scire.mjs",
+    "tui": "node bin/scire.mjs tui",
+    "snapshot": "node scripts/scire-tui-snapshot.mjs"
   },
   "dependencies": {
+    "@ai-sdk/openai-compatible": "^2.0.0",
     "@omniroute/opencode-plugin": "^0.2.1",
     "@omniroute/opencode-provider": "^0.1.0",
+    "ink": "^7.1.1",
+    "ink-spinner": "^5.0.0",
+    "ink-text-input": "^6.0.0",
     "opencode-sessions": "^1.0.0",
-    "@ai-sdk/openai-compatible": "^2.0.0"
+    "react": "^19.2.8"
   },
   "devDependencies": {
-    "typescript": "^5.0.0",
-    "@types/node": "^22.0.0"
+    "@types/node": "^22.0.0",
+    "node-pty": "^1.1.0",
+    "typescript": "^5.0.0"
   }
 }

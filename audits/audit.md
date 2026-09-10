@@ -6,6 +6,16 @@ audit vive en su propio archivo con fecha ISO; este fichero solo resume y enlaza
 
 ## Resumen ejecutivo (más relevante hasta la fecha)
 
+- **2026-09-10 — TUI interactivo + visor (este audit)**: la CLI pasó de one-shot
+  a shell interactiva estilo opencode con **Ink 7 + React 19** (`scire` a secas
+  abre el TUI en TTY; `scire tui` explícito). Texto libre → orchestrator;
+  slash-commands para los 6 agentes; builtins reales (/audit new, /report new,
+  /report compile). Runner `spawnLive` (spawn async) para ver a los agentes **en
+  vivo**, y **visor de PDF** a tiempo real (`pdftotext` texto + `pdftoppm`→`chafa`
+  arte ANSI, chafa instalado por winget) para reportes LaTeX, `.tex`, `.ipynb` y
+  texto (Ctrl+V alterna). Verificado por smoke test TTY (node-pty) y unit tests
+  de enrutado/builtins/visor. Nota pendiente: Enter vía conwinpty no dispara en
+  el test headless, pero es patrón estándar de Ink en terminal real.
 - **2026-09-10 — Kaizen agent-org review (round 3, este audit)**: revisados los 6
   agentes + AGENTS.md contra los audits 09-08/09-09 con verificación de firmas en
   vivo. 2 ediciones estrechas: researcher.md ganó la regla anti-umbrales-inventados
@@ -114,6 +124,7 @@ audit vive en su propio archivo con fecha ISO; este fichero solo resume y enlaza
 
 | Fecha | Audit | Verdicto | Enlace |
 |-------|-------|----------|--------|
+| 2026-09-10 | TUI interactivo (Ink 7 + React 19) con visor de artefactos | APPROVE | `./2026-09-10-tui-interactivo-visor-artefactos.md` |
 | 2026-09-10 | kaizen agent-org review (round 3, signature drift + anti-threshold rule) | APPROVE | `./2026-09-10-kaizen-agent-review-round3.md` |
 | 2026-09-09 | efficacy delta determinista vs LLM judges (research cycle) | APPROVE | `./2026-09-09-efficacy-delta-judging-research.md` |
 | 2026-09-08 | kaizen agent-org review (round 2, evidencia allowed_signers) | APPROVE | `./2026-09-08-kaizen-agent-review.md` |

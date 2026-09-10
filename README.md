@@ -58,11 +58,43 @@ npx omniroute@latest install   # o seguir docs del repo OmniRoute
 npm install -g .
 scire setup        # detecta y ADOPTA config previa (OmniRoute/Hermes/MCP); instala lo que falta
 
+# Shell interactiva TUI (estilo opencode) — arranca con `scire` a secas en terminal
+scire              # abre la shell interactiva si hay TTY (o `scire tui`)
+```
+
+### TUI — shell interactiva con visor de artefactos a tiempo real
+
+La CLI tiene un modo REPL interactivo construido con **Ink 7 + React 19**. Una
+vez dentro (con `scire` o `scire tui`):
+
+```text
+❯ /help                    # lista comandos
+❯ /status                  # chequeo del sistema
+❯ /orchestrate <objetivo>  # o texto libre (equivale a /orchestrate)
+❯ /research <pregunta>     # researcher
+❯ /evaluate <trabajo>      # evaluator (falsación adversarial)
+❯ /experiment <diseño>     # experimenter
+❯ /analyze <resultados>    # analyzer
+❯ /review <trabajo>        # reviewer
+❯ /audit                   # lista audits
+❯ /audit new "<título>"    # crea audit
+❯ /report new <tipo> [título]  # crea plantilla LaTeX
+❯ /report compile <slug>   # compila LaTeX → PDF (y verás el PDF con /view)
+❯ /view <archivo>          # visor de PDF/LaTeX/.ipynb/texto (Ctrl+V alterna panel)
+```
+
+- Salida de agentes **en vivo** (spoña el `opencode run` y muestra el streaming).
+- Ctrl+C cancela el agente en curso (o sale si no hay agente).
+- **Visor de PDF**: `pdftoppm` + `chafa` renderizan páginas como arte ANSI y
+  `pdftotext` ofrece el texto legible — para ver reportes LaTeX compilados al
+  momento. El visor también abre archivos `.tex`, notebooks `.ipynb` y texto.
+- Comandos one-shot (`scire status`, `scire research ...`, etc.) siguen disponibles.
+
 # Sesión e identidad (Daleth es la firma del humano)
 scire session new "tu firma"       # abre sesión (pide tu nombre/firma la primera vez)
 scire session                      # consulta la sesión activa
 
-# Ciclo de investigación (orquestado)
+Ciclo de investigación (orquestado):
 scire orchestrate "objetivo"        # orchestrator → descompone, delega y sintetiza
 scire research "pregunta"          # researcher → brief + hipótesis con citas
 scire experiment <exp> <métrica>   # experimenter → run.py + grader
